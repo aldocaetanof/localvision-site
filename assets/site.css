@@ -444,7 +444,7 @@ h1 { max-width: 17ch; font-size: clamp(38px, 4.7vw, 60px); line-height: 1.04; le
 }
 
 /* Grade de Câmeras */
-.mock-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 12px; }
+.mock-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 12px; }
 .mock-cam {
   min-height: 160px;
   aspect-ratio: 16 / 10;
@@ -802,11 +802,28 @@ summary::marker { color: var(--accent); }
   .cta { padding: 70px 18px 56px; }
   .cta-box { padding: 36px 20px; }
   .btn-lg { width: 100%; text-align: center; padding: 14px 16px; }
-  .mock-cam { min-height: 95px; }
-  .app-sidebar { width: 44px; padding: 6px 3px; }
-  .app-nav-item span, .app-user-role { display: none; }
+  /* Mockup do app no celular: sem barra lateral e controles de janela, grade
+     2×2 que encolhe (minmax(0,1fr) + sem min-height; antes transbordava) e
+     painel do agente compacto, sem a etiqueta repetida nem a dica. */
+  .hero-card { border-radius: 14px; box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05); }
+  .app-titlebar { padding: 7px 10px; font-size: 10.5px; }
+  .app-title-status, .app-win-controls, .app-sidebar { display: none; }
+  .app-stage-bar { padding: 7px 8px; gap: 6px; }
   .stage-chip:not(.rec):not(.crit) { display: none; }
-  .app-title-status { display: none; }
+  .mock-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 8px; }
+  .mock-cam { min-height: 0; border-radius: 6px; }
+  .mock-cam-tag { top: 4px; right: 4px; font-size: 8px; padding: 1px 5px; }
+  .tag-crit { gap: 4px; }
+  .mock-cam-badge { bottom: 4px; left: 4px; font-size: 8.5px; padding: 1px 5px; }
+  .agent-panel { margin: 0 8px 8px; padding: 10px 11px; }
+  .agent-panel-header { gap: 8px; padding-bottom: 7px; margin-bottom: 8px; }
+  .agent-tag-vlm, .agent-hint { display: none; }
+  .agent-title { white-space: nowrap; }
+  .agent-cam-tab { padding: 2px 6px; font-size: 9.5px; }
+  .agent-narration { padding: 7px 10px; margin-bottom: 7px; min-height: 0; }
+  .agent-text { font-size: 12px; }
+  .agent-meta-grid { grid-template-columns: 1fr; gap: 4px; font-size: 10px; }
+  .agent-meta-item { padding: 3px 8px; }
 }
 
 /* Política de privacidade */
