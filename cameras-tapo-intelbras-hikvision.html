@@ -1,0 +1,164 @@
+<!doctype html>
+<!-- Local Vision — guia: câmeras Tapo, Intelbras e Hikvision via RTSP (página de conteúdo/SEO). -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Câmera Tapo, Intelbras e Hikvision com inteligência artificial (RTSP) — Local Vision</title>
+  <link rel="canonical" href="https://localvision.com.br/cameras-tapo-intelbras-hikvision.html" />
+  <meta name="description" content="Como achar o endereço RTSP da câmera Tapo, Intelbras ou Hikvision (e de DVR/NVR) e usar no Local Vision para detectar pessoas, reconhecer rostos e receber alertas com foto no celular." />
+  <meta name="theme-color" content="#08101d" />
+  <meta property="og:title" content="Câmera Tapo, Intelbras e Hikvision com inteligência artificial" />
+  <meta property="og:description" content="Endereços RTSP de cada marca, como liberar o acesso e como cadastrar no Local Vision para ter detecção de pessoas e alertas." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://localvision.com.br/cameras-tapo-intelbras-hikvision.html" />
+  <meta property="og:site_name" content="Local Vision" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:image" content="https://localvision.com.br/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src https://cloudflareinsights.com; form-action 'none'; object-src 'none'; base-uri 'self'" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png?v=20260927-lens" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20260927-lens" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css?v=20260928b" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Como usar câmera Tapo, Intelbras ou Hikvision com inteligência artificial via RTSP",
+    "inLanguage": "pt-BR",
+    "totalTime": "PT10M",
+    "step": [
+      { "@type": "HowToStep", "name": "Descubra o IP da câmera", "text": "Use a busca de câmeras na rede do Local Vision ou veja o IP no app da câmera ou no roteador." },
+      { "@type": "HowToStep", "name": "Libere o acesso RTSP", "text": "Na Tapo, crie a Conta da câmera no app Tapo. Na Intelbras e na Hikvision, use o usuário admin e a senha definida na ativação da câmera." },
+      { "@type": "HowToStep", "name": "Escolha o fabricante", "text": "No cadastro da câmera, escolha o fabricante para o app montar o caminho RTSP certo, ou deixe em Automático." },
+      { "@type": "HowToStep", "name": "Teste a conexão", "text": "Preencha usuário e senha, clique em Testar conexão e salve a câmera." }
+    ]
+  }
+  </script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "2425f0a6b76047ed88d276895d621326"}'></script>
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="./" aria-label="Local Vision — página inicial">
+        <img class="brand-mark" src="assets/logo-owl-refined.png?v=20260927-lens" width="36" height="36" alt="" />
+        <span class="brand-text">Local Vision<small>Monitoramento inteligente</small></span>
+      </a>
+      <div class="top-actions legal-actions">
+        <a class="btn btn-primary" href="./#cadastro">Testar grátis</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" class="wrap legal">
+    <p class="kicker">Guia</p>
+    <h1>Câmera Tapo, Intelbras e Hikvision com inteligência artificial</h1>
+    <p class="legal-lede">Sua câmera já grava, mas não sabe diferenciar uma pessoa de um gato ou de uma folha balançando. O Local Vision lê a imagem da câmera pela rede (RTSP) e adiciona inteligência artificial no seu computador: detecção de pessoas, reconhecimento de rostos, zonas restritas e alertas com foto no celular. Sem trocar a câmera e sem mensalidade por câmera.</p>
+
+    <nav class="legal-toc" aria-label="Nesta página">
+      <a href="#rtsp">O que é RTSP</a>
+      <a href="#tapo">TP-Link Tapo</a>
+      <a href="#intelbras">Intelbras</a>
+      <a href="#hikvision">Hikvision</a>
+      <a href="#dvr">DVR e NVR</a>
+      <a href="#cadastrar">Cadastrar no Local Vision</a>
+      <a href="#problemas">Não conectou?</a>
+    </nav>
+
+    <section id="rtsp">
+      <h2>O que é RTSP e por que importa</h2>
+      <p><strong>RTSP</strong> é o “endereço de vídeo” da câmera na rede da sua casa. É por ele que programas como o Local Vision recebem a imagem, sem passar pela nuvem do fabricante. A maioria das câmeras IP tem RTSP. O endereço tem este formato:</p>
+      <p><code>rtsp://usuário:senha@IP-da-câmera:554/caminho</code></p>
+      <p>O <strong>caminho</strong> muda de marca para marca. No Local Vision você não precisa digitar o endereço: escolhe o fabricante e o app monta o caminho sozinho. Os caminhos abaixo servem para conferir ou para usar em outros programas.</p>
+    </section>
+
+    <section id="tapo">
+      <h2>TP-Link Tapo (C200, C210, C310, C500 e outras)</h2>
+      <p>Na Tapo, o RTSP só funciona depois que você cria a <strong>conta da câmera</strong>, que é diferente do seu login da TP-Link:</p>
+      <ol>
+        <li>No app <strong>Tapo</strong>, abra a câmera e toque na engrenagem de configurações.</li>
+        <li>Entre em <strong>Configurações avançadas</strong> e depois em <strong>Conta da câmera</strong>.</li>
+        <li>Crie um usuário e uma senha. São eles que você vai usar no Local Vision.</li>
+      </ol>
+      <ul>
+        <li>Alta qualidade: <code>rtsp://usuário:senha@IP:554/stream1</code></li>
+        <li>Baixa qualidade: <code>rtsp://usuário:senha@IP:554/stream2</code></li>
+      </ul>
+      <p>O nome dos menus pode variar um pouco conforme a versão do app Tapo.</p>
+    </section>
+
+    <section id="intelbras">
+      <h2>Intelbras (linha VIP, Mibo e iM)</h2>
+      <p>As câmeras IP atuais da Intelbras seguem o mesmo padrão da Dahua. O usuário costuma ser <strong>admin</strong> e a senha é a que você definiu ao ativar a câmera (no app Intelbras ou no navegador).</p>
+      <ul>
+        <li>Alta qualidade: <code>rtsp://admin:senha@IP:554/cam/realmonitor?channel=1&amp;subtype=0</code></li>
+        <li>Baixa qualidade: <code>rtsp://admin:senha@IP:554/cam/realmonitor?channel=1&amp;subtype=1</code></li>
+      </ul>
+      <p>Alguns modelos VIP antigos (como VIP 1120 e 1220) usam um formato diferente, com a senha no fim do endereço. No Local Vision, escolha <strong>Intelbras VIP legado</strong> e o app cuida disso.</p>
+      <p>Câmeras Mibo e iM feitas só para nuvem podem não ter RTSP em todos os modelos. Se a sua não conectar, confira na ficha técnica se ela tem RTSP ou ONVIF.</p>
+    </section>
+
+    <section id="hikvision">
+      <h2>Hikvision (e Hilook)</h2>
+      <p>Na Hikvision o RTSP vem ligado na maioria dos modelos. O usuário costuma ser <strong>admin</strong>, com a senha criada na ativação da câmera.</p>
+      <ul>
+        <li>Alta qualidade: <code>rtsp://admin:senha@IP:554/Streaming/Channels/101</code></li>
+        <li>Baixa qualidade: <code>rtsp://admin:senha@IP:554/Streaming/Channels/102</code></li>
+      </ul>
+    </section>
+
+    <section id="dvr">
+      <h2>Câmeras ligadas em DVR ou NVR</h2>
+      <p>Se as câmeras estão ligadas a um gravador (DVR ou NVR), use o IP do gravador e troque o número do canal:</p>
+      <ul>
+        <li><strong>Intelbras e Dahua:</strong> <code>channel=2</code> para a câmera 2, <code>channel=3</code> para a 3, e assim por diante.</li>
+        <li><strong>Hikvision:</strong> <code>201</code> para a câmera 2 em alta qualidade, <code>301</code> para a 3, e assim por diante (o último dígito 2 é a baixa qualidade).</li>
+      </ul>
+      <p>Assim você aproveita as câmeras analógicas que já estão instaladas.</p>
+    </section>
+
+    <section id="cadastrar">
+      <h2>Cadastrar a câmera no Local Vision</h2>
+      <ol>
+        <li>No app, vá em <strong>Câmeras</strong> e clique em <strong>Buscar câmeras na rede</strong>. O Local Vision procura câmeras na sua rede e mostra o IP de cada uma.</li>
+        <li>Escolha a câmera e, em <strong>Fabricante</strong>, selecione a marca. Se não souber, deixe em <strong>Automático</strong> e o app testa os caminhos conhecidos.</li>
+        <li>Preencha <strong>usuário</strong> e <strong>senha</strong> e clique em <strong>Testar conexão</strong>.</li>
+        <li>Deu certo? Dê um nome à câmera (por exemplo, “Portão”) e salve.</li>
+      </ol>
+      <p>Depois, desenhe as <strong>zonas</strong> que importam, cadastre os <strong>rostos</strong> de quem mora na casa e, se quiser, <a href="alerta-camera-telegram.html">ligue o alerta com foto no Telegram</a>.</p>
+      <p><strong>Dica:</strong> use a baixa qualidade (stream2, subtype=1 ou 102) quando tiver muitas câmeras em um computador mais simples. A detecção continua funcionando bem e o computador trabalha menos.</p>
+    </section>
+
+    <section id="problemas">
+      <h2>Não conectou? Confira isto</h2>
+      <ul>
+        <li><strong>Mesma rede:</strong> o computador e a câmera precisam estar na mesma rede (mesmo roteador).</li>
+        <li><strong>Usuário e senha:</strong> na Tapo, use a conta da câmera, não o e-mail da TP-Link. Nas outras, a senha da ativação.</li>
+        <li><strong>IP mudou:</strong> se a câmera ficar desconectada depois de um tempo, reserve o IP dela no roteador (DHCP fixo).</li>
+        <li><strong>Porta:</strong> a padrão é 554. Se alguém mudou na câmera, use a mesma no Local Vision.</li>
+        <li><strong>Teste fora do app:</strong> abra o endereço RTSP no VLC (Mídia → Abrir fluxo de rede). Se não abrir no VLC, o problema é na câmera ou na rede.</li>
+      </ul>
+      <p>Ainda com dúvida? Escreva para <a href="mailto:aldo.caetano@localvision.com.br">aldo.caetano@localvision.com.br</a> com a marca e o modelo da câmera.</p>
+    </section>
+
+    <section class="cta-box" style="margin-top:48px">
+      <h2 style="margin-top:0">Teste com as suas câmeras, grátis por 14 dias</h2>
+      <p>Receba o instalador por e-mail na hora. Sem cartão.</p>
+      <p><a class="btn btn-primary btn-lg" href="./#cadastro">Quero testar</a></p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <div><strong>Local Vision</strong><span> · Monitoramento inteligente com processamento local</span></div>
+      <nav aria-label="Rodapé"><a href="./">Página inicial</a><a href="alerta-camera-telegram.html">Alerta no Telegram</a><a href="privacidade.html">Política de privacidade</a><a href="termos.html">Termos de uso</a><a href="mailto:aldo.caetano@localvision.com.br">aldo.caetano@localvision.com.br</a></nav>
+      <small>© Local Vision — processamento principal no seu computador.</small>
+    </div>
+  </footer>
+</body>
+</html>
