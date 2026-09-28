@@ -1,6 +1,6 @@
 {
-  "version": "0.1.1",
-  "url": "https://github.com/aldocaetanof/localvision-site/releases/download/v0.1.1/LocalVision-Setup-0.1.1.exe",
-  "sha256": "12a7a22f6a8c51a5131d8ee9fc9ba607be8cacce64025a83954efba1abaf90d9",
-  "notes": "Lançamento comercial: cadastro com trial de 14 dias e assinatura no app. Instalador não assinado: na tela azul do SmartScreen, Mais informações → Executar assim mesmo; confira o SHA256 acima."
+  "version": "0.1.2",
+  "url": "https://github.com/aldocaetanof/localvision-site/releases/download/v0.1.2/LocalVision-Setup-0.1.2.exe",
+  "sha256": "b8e254759f0ff787b40ebd7f679286e4917207b589b41f0d3a658fe96a7ed4cb",
+  "notes": "O app passa a usar sempre o próprio servidor, mesmo com a porta 8000 ocupada. Instalador não assinado: na tela azul do SmartScreen, Mais informações → Executar assim mesmo; confira o SHA256 acima."
 }
