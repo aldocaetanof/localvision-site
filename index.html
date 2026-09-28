@@ -1,0 +1,379 @@
+<!doctype html>
+<!-- Local Vision — landing estática (docs/), publicada no GitHub Pages.
+     O cadastro envia para o relay no Supabase; aberta localmente (arquivo
+     ou 127.0.0.1), usa o relay Python em 127.0.0.1:9000. -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Local Vision — Monitoramento inteligente com processamento local</title>
+  <meta name="description" content="Local Vision: monitoramento multi-câmeras com inteligência artificial no seu computador, detecção de pessoas e eventos, zonas restritas e alertas opcionais no Telegram." />
+  <meta name="theme-color" content="#08101d" />
+  <meta property="og:title" content="Local Vision — Monitoramento inteligente com processamento local" />
+  <meta property="og:description" content="IA no seu computador: pessoas, rostos e zonas restritas. Vídeos e gravações permanecem na sua máquina; integrações externas são opcionais." />
+  <meta property="og:type" content="website" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self' https: data:; connect-src 'none'; form-action 'self' https://szsdhiimvrjerkvtqwzw.supabase.co http://127.0.0.1:9000; object-src 'none'; base-uri 'self'" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png?v=20260927-lens" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20260927-lens" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css?v=20260928" />
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="announce"><div class="wrap"><span class="announce-signal" aria-hidden="true"></span>Trial gratuito de 14 dias · download imediato por e-mail · <a href="#cadastro">Testar grátis <span aria-hidden="true">→</span></a></div></div>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="./" aria-label="Local Vision — página inicial">
+        <img class="brand-mark" src="assets/logo-owl-refined.png?v=20260927-lens" width="36" height="36" alt="" />
+        <span class="brand-text">Local Vision<small>Monitoramento inteligente</small></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Navegação principal">
+        <a href="#recursos">Recursos</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#planos">Planos</a>
+        <a href="#seguranca">Segurança</a>
+        <a class="nav-cta" href="#cadastro">Testar grátis</a>
+      </nav>
+      <div class="top-actions">
+        <a class="btn btn-primary" href="#cadastro">Testar grátis</a>
+        <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero wrap">
+      <div class="hero-orbit hero-orbit-one" aria-hidden="true"></div>
+      <div class="hero-orbit hero-orbit-two" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="pill"><span class="dot" aria-hidden="true"></span> IA no seu computador · Vídeo local · Integrações opcionais</p>
+        <h1>Sua casa vigiada por <span class="hl">inteligência artificial local</span>, direto no seu computador.</h1>
+        <p class="lede">O Local Vision transforma câmeras IP e webcams em um centro de monitoramento inteligente: detecta <strong>pessoas</strong>, reconhece <strong>rostos</strong>, vigia <strong>zonas restritas</strong> e pode enviar <strong>alertas com foto no Telegram</strong>. Vídeos, gravações e reconhecimento facial permanecem na sua máquina.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary btn-lg" href="#cadastro">Testar grátis por 14 dias</a>
+          <a class="btn btn-ghost btn-lg" href="#como-funciona">Ver como funciona</a>
+        </div>
+        <p class="hero-meta">Windows 10/11 · 64 bits · A partir de R$ 29,92/mês no plano anual · Sem cartão no trial</p>
+        <ul class="hero-points">
+          <li>Roda <strong>offline na CPU</strong> — sem GPU cara</li>
+          <li><strong>Vídeos e gravações ficam na máquina</strong> — integrações externas só quando ativadas</li>
+          <li>Funciona com <strong>RTSP + webcams</strong> que você já tem</li>
+        </ul>
+      </div>
+      <div class="hero-card app-window" role="img" aria-label="Janela do Local Vision com monitoramento ao vivo e IA em tempo real">
+        <!-- Barra de Título Windows do Local Vision -->
+        <div class="app-titlebar">
+          <div class="app-title-brand">
+            <img class="app-title-icon" src="assets/logo-owl-refined.png?v=20260927-lens" width="16" height="16" alt="" />
+            <span>Local Vision</span>
+          </div>
+          <div class="app-title-status">
+            <span class="app-status-dot" aria-hidden="true"></span>
+            <span>IA local · CPU</span>
+          </div>
+          <div class="app-win-controls" aria-hidden="true">
+            <span class="app-win-btn">—</span>
+            <span class="app-win-btn">□</span>
+            <span class="app-win-btn app-win-close">✕</span>
+          </div>
+        </div>
+
+        <!-- Estrutura do App (Sidebar + Palco Central) -->
+        <div class="app-body">
+          <aside class="app-sidebar" aria-label="Navegação do aplicativo">
+            <div class="app-nav-item active" title="Visualização ao vivo">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3" /><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" /></svg>
+              <span>Ao vivo</span>
+            </div>
+            <div class="app-nav-item" title="Configurações e zonas">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6 12 3l9 3v12l-9 3-9-3Z" /><path d="M12 3v18" /><path d="M3 6l9 3 9-3" /></svg>
+              <span>Zonas</span>
+            </div>
+            <div class="app-nav-item" title="Galeria de rostos cadastrados">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-7 8-7s8 3 8 7" /></svg>
+              <span>Rostos</span>
+            </div>
+            <div class="app-nav-item has-badge" title="Histórico de eventos">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8" /><path d="M3 3v5h5" /><path d="M12 7v5l3 2" /></svg>
+              <span>Histórico</span>
+              <em class="app-nav-badge">1</em>
+            </div>
+            <div class="app-sidebar-user">
+              <span class="app-user-avatar">AD</span>
+              <span class="app-user-role">admin</span>
+            </div>
+          </aside>
+
+          <div class="app-stage">
+            <div class="app-stage-bar">
+              <span class="stage-chip rec"><span class="stage-dot" aria-hidden="true"></span>REC · 00:14:22</span>
+              <span class="stage-chip">4 câmeras</span>
+              <span class="stage-chip stage-chip-active">● PORTÃO</span>
+              <span class="stage-chip crit"><span class="stage-dot-crit" aria-hidden="true"></span>1 atenção</span>
+            </div>
+
+            <div class="mock-grid" id="mockGrid">
+              <div class="mock-cam active-cam cam-crit" data-cam-id="1" title="Câmera 1: Portão — Pessoa desconhecida ocultando o rosto">
+                <span class="mock-cam-tag tag-crit"><span class="tag-crit-dot" aria-hidden="true"></span>PERIGO</span>
+                <video class="mock-cam-video" autoplay loop muted playsinline preload="auto" src="assets/videos/pessoa_mascarada_processada.webm"></video>
+                <span class="mock-cam-badge"><span class="mock-cam-badge-dot" style="background:#ef4444"></span>CAM 01 · Portão</span>
+              </div>
+              <div class="mock-cam" data-cam-id="2" title="Câmera 2: Acesso — Leitura automática de placa">
+                <video class="mock-cam-video" autoplay loop muted playsinline preload="auto" src="assets/videos/ocr_placa_processada.webm"></video>
+                <span class="mock-cam-badge"><span class="mock-cam-badge-dot"></span>CAM 02 · Acesso</span>
+              </div>
+              <div class="mock-cam" data-cam-id="3" title="Câmera 3: Corredor — Reconhecimento facial local">
+                <video class="mock-cam-video" autoplay loop muted playsinline preload="auto" src="assets/videos/portao.mp4"></video>
+                <span class="mock-cam-badge"><span class="mock-cam-badge-dot"></span>CAM 03 · Corredor</span>
+              </div>
+              <div class="mock-cam" data-cam-id="4" title="Câmera 4: Cozinha — Detecção de Pet e Invasão de Zona da Lixeira">
+                <span class="mock-cam-tag tag-warn">ZONA LIXEIRA</span>
+                <video class="mock-cam-video" autoplay loop muted playsinline preload="auto" src="assets/videos/porta_fundos.mp4"></video>
+                <span class="mock-cam-badge"><span class="mock-cam-badge-dot" style="background:#f59e0b"></span>CAM 04 · Cozinha</span>
+              </div>
+            </div>
+
+            <!-- Painel do Agente Vigilante em tempo real -->
+            <div class="agent-panel" id="agentPanel" aria-live="polite">
+              <div class="agent-panel-header">
+                <div class="agent-brand">
+                  <span class="agent-radar" aria-hidden="true"></span>
+                  <span class="agent-title">Agente Vigilante</span>
+                  <span class="agent-tag-vlm" id="agentProviderTag">Agente Vigilante · CPU</span>
+                </div>
+                <div class="agent-cam-selector" role="tablist" aria-label="Seleção de feed para análise">
+                  <button type="button" class="agent-cam-tab active" data-cam="1">CAM 01</button>
+                  <button type="button" class="agent-cam-tab" data-cam="2">CAM 02</button>
+                  <button type="button" class="agent-cam-tab" data-cam="3">CAM 03</button>
+                  <button type="button" class="agent-cam-tab" data-cam="4">CAM 04</button>
+                </div>
+              </div>
+
+              <div class="agent-narration agent-state-warn" id="agentState">
+                <span class="agent-verdict" id="agentVerdict">ATENÇÃO NECESSÁRIA</span>
+                <p class="agent-text" id="agentText">Pessoa com o rosto oculto aproximando-se do perímetro.</p>
+              </div>
+
+              <div class="agent-meta-grid">
+                <div class="agent-meta-item">
+                  <strong>Sinal:</strong> <span id="agentMetaDetect">Rosto oculto + aproximação</span>
+                </div>
+                <div class="agent-meta-item">
+                  <strong>Confiança:</strong> <span id="agentMetaZone">82%</span>
+                </div>
+                <div class="agent-meta-item">
+                  <strong>Processamento:</strong> <span id="agentMetaAction">Local · 43 ms · imagem privada</span>
+                </div>
+              </div>
+              <span class="agent-hint">Clique em uma câmera para acompanhar os sinais detectados ao vivo</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="strip" aria-label="Garantias">
+      <div class="wrap strip-inner">
+        <div><strong>R$ 0</strong><span>cobrado por câmera</span></div>
+        <div><strong>Sem GPU</strong><span>roda na CPU do seu PC</span></div>
+        <div><strong>Sem nuvem</strong><span>vídeo fica na sua máquina</span></div>
+        <div><strong>14 dias</strong><span>grátis, sem cartão</span></div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="recursos">
+      <p class="kicker">Diferenciais</p>
+      <h2>Um vigia que só chama você quando importa</h2>
+      <p class="sub">Não é mais um app de câmera: o Local Vision analisa cada evento e separa a rotina do que merece a sua atenção.</p>
+      <div class="grid">
+        <article class="card feature-card">
+          <span class="feature-index" aria-hidden="true">01</span>
+          <h3>Reconhecimento facial local</h3>
+          <p>Cadastre as pessoas autorizadas e ajuste a sensibilidade. O sistema diferencia <strong>rosto conhecido</strong> de desconhecido e reduz alertas desnecessários.</p>
+        </article>
+        <article class="card feature-card">
+          <span class="feature-index" aria-hidden="true">02</span>
+          <h3>Zonas restritas desenháveis</h3>
+          <p>Desenhe polígonos sobre a imagem: piscina, muro, canil. Só há alerta quando <strong>pessoa ou pet cruza a zona</strong>, não a rua inteira.</p>
+        </article>
+        <article class="card feature-card">
+          <span class="feature-index" aria-hidden="true">03</span>
+          <h3>Alertas que respeitam você</h3>
+          <p>Foto do evento no <strong>Histórico</strong> e, se você ativar a integração, no <strong>Telegram</strong>. Intervalos configuráveis evitam alertas repetidos.</p>
+        </article>
+        <article class="card feature-card">
+          <span class="feature-index" aria-hidden="true">04</span>
+          <h3>Multi-câmera sem dor</h3>
+          <p>RTSP ou webcam, zoom/brilho/contraste por câmera, gravação contínua com <strong>proteção inteligente de disco</strong> e recuperação automática de conexão.</p>
+        </article>
+        <article class="card feature-card">
+          <span class="feature-index" aria-hidden="true">05</span>
+          <h3>Agente Vigilante</h3>
+          <p>O <strong>Agente Vigilante</strong> classifica sinais de risco diretamente na CPU, incluindo rosto oculto e aproximação suspeita. Recursos opcionais permitem descrições livres e busca semântica.</p>
+        </article>
+        <article class="card feature-card">
+          <span class="feature-index" aria-hidden="true">06</span>
+          <h3>Feito para instaladores</h3>
+          <p>Painel <strong>administrativo completo</strong> + visão de <strong>acesso seguro</strong> para moradores. Licença por instância, backup/recuperação e instalador Windows.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section" id="como-funciona">
+      <p class="kicker">Como funciona</p>
+      <h2>Do cadastro ao primeiro alerta em 3 passos</h2>
+      <ol class="steps">
+        <li><strong>1 · Cadastre-se</strong><span>Preencha o formulário e receba na hora, por e-mail, o link do instalador para Windows.</span></li>
+        <li><strong>2 · Instale e ative</strong><span>Ao receber o acesso, instale o aplicativo, confirme seu e-mail e crie a senha local do administrador. Isso libera 14 dias de trial nesta instalação, sem cartão.</span></li>
+        <li><strong>3 · Configure</strong><span>Cadastre câmeras IP (RTSP) ou webcams, desenhe zonas, cadastre rostos e ajuste a sensibilidade e os intervalos de alerta.</span></li>
+      </ol>
+    </section>
+
+    <section class="wrap section" id="comparativo">
+      <p class="kicker">Comparativo honesto</p>
+      <h2>Uma assinatura por instalação, sem cobrança de vídeo por câmera.</h2>
+      <div class="table-wrap">
+        <table>
+          <caption>Local Vision versus câmeras de nuvem típicas</caption>
+          <tr><th scope="col">Critério</th><th scope="col">Local Vision</th><th scope="col">Nuvem típica</th></tr>
+          <tr><th scope="row">Onde o vídeo é processado</th><td>Na sua máquina (rede local)</td><td>Em servidores de terceiros</td></tr>
+          <tr><th scope="row">Uso sem internet</th><td>Gravação e detecção continuam locais</td><td>Pode depender da conexão e do plano</td></tr>
+          <tr><th scope="row">Custo recorrente de vídeo</th><td>Zero por câmera</td><td>Assinatura por câmera/mês</td></tr>
+          <tr><th scope="row">Reconhecimento de rostos</th><td>Incluído e processado na máquina</td><td>Plano premium ou inexistente</td></tr>
+          <tr><th scope="row">Zonas desenháveis</th><td>Polígonos por câmera</td><td>Retângulo básico ou pago</td></tr>
+          <tr><th scope="row">Controle de retenção</th><td>Prazo configurável na instalação</td><td>Depende da política do fornecedor</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <section class="wrap section" id="planos">
+      <p class="kicker">Planos</p>
+      <h2>Um preço simples, sem cobrança por câmera</h2>
+      <p class="sub">Teste por 14 dias sem cartão. Você instala e configura sozinho, com guias no app e suporte online — sem hardware proprietário e sem técnico em casa.</p>
+      <div class="plans audience-cards">
+        <article class="card plan featured">
+          <p class="audience-label">Para sua casa</p>
+          <h3>Proteção inteligente, no seu ritmo.</h3>
+          <p class="price">R$ 39,90<span>/mês</span></p>
+          <p class="price-alt">ou <strong>R$ 359/ano</strong> (equivale a R$ 29,92/mês) · semestral R$ 199</p>
+          <ul><li>Todos os recursos incluídos</li><li>Sem cobrança por câmera</li><li>Pagamento no app via Mercado Pago</li><li>7 dias de tolerância offline</li></ul>
+          <a class="btn btn-primary" href="#cadastro">Testar grátis por 14 dias</a>
+        </article>
+        <article class="card plan">
+          <p class="audience-label">Para instaladores</p>
+          <h3>Entregue uma experiência completa ao cliente.</h3>
+          <p class="price">Licença<span> por instalação</span></p>
+          <p class="price-alt">Condições para instaladores: <a href="mailto:aldo.caetano@localvision.com.br">aldo.caetano@localvision.com.br</a></p>
+          <ul><li>Uma licença por cliente</li><li>Painel admin sob seu controle</li><li>Acesso só de leitura para o morador</li><li>Backup e restauração no aplicativo</li></ul>
+          <a class="btn btn-ghost" href="#cadastro">Cadastrar como instalador</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section" id="requisitos">
+      <p class="kicker">Requisitos</p>
+      <h2>O que você precisa (provavelmente já tem)</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Computador Windows</h3>
+          <p>Windows 10 ou 11 de 64 bits. A IA roda diretamente na <strong>CPU — sem necessidade de placa de vídeo dedicada</strong>. O sistema se inicializa e prepara tudo de forma automática.</p>
+        </article>
+        <article class="card">
+          <h3>Suas câmeras atuais</h3>
+          <p>Câmeras IP com <strong>RTSP</strong> ou webcams USB. O cadastro é feito no próprio app com IP, porta, usuário e senha — nada de técnico em casa.</p>
+        </article>
+        <article class="card">
+          <h3>Conta no Telegram (opcional)</h3>
+          <p>Só se quiser receber os alertas com foto no celular. Todo o resto — ao vivo, histórico, gravações — funciona sem ela.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section" id="cadastro">
+      <p class="kicker">Acesso ao trial</p>
+      <h2>Teste na sua própria máquina</h2>
+      <p class="sub">Cadastre-se e receba na hora, por e-mail, o link do instalador. Os 14 dias de teste só começam quando você instalar o aplicativo e confirmar o e-mail.</p>
+      <div class="signup-box">
+        <div class="signup-copy">
+          <h3>Conte um pouco sobre seu cenário</h3>
+          <p>O e-mail e as respostas abaixo servem apenas para avaliar compatibilidade e entrar em contato sobre o trial. O cadastro não pede cartão, senha de câmera, endereço ou imagens.</p>
+          <p><strong>Seus vídeos não são enviados neste cadastro.</strong> O relay guarda somente estes dados comerciais.</p>
+          <p>Dúvidas? Escreva para <a href="mailto:aldo.caetano@localvision.com.br">aldo.caetano@localvision.com.br</a>.</p>
+        </div>
+        <form class="signup-form" id="trialForm" method="post" action="https://szsdhiimvrjerkvtqwzw.supabase.co/functions/v1/relay/trial-interest" accept-charset="UTF-8">
+          <label class="field"><span>Nome <small>(opcional)</small></span><input name="name" autocomplete="name" maxlength="120" /></label>
+          <label class="field"><span>E-mail</span><input type="email" name="email" autocomplete="email" maxlength="254" required /></label>
+          <label class="field"><span>Quero usar</span><select name="profile" required><option value="">Selecione</option><option value="home">Na minha casa</option><option value="installer">Para meus clientes</option></select></label>
+          <label class="field"><span>Computador</span><select name="windows"><option value="unknown">Não sei informar</option><option value="windows-11">Windows 11</option><option value="windows-10">Windows 10</option><option value="other">Outro sistema</option></select></label>
+          <label class="field"><span>Câmeras</span><select name="camera_type"><option value="unknown">Não sei informar</option><option value="rtsp">Câmera IP com RTSP</option><option value="webcam">Webcam USB</option><option value="both">Os dois tipos</option></select></label>
+          <label class="field"><span>Quantidade <small>(opcional)</small></span><input type="number" name="camera_count" inputmode="numeric" min="0" max="64" /></label>
+          <label class="field field-wide"><span>O que você quer detectar? <small>(opcional)</small></span><textarea name="objective" maxlength="500" placeholder="Ex.: pessoa no quintal, pet perto da piscina, rosto desconhecido..."></textarea></label>
+          <label class="honeypot" aria-hidden="true">Site da empresa<input name="company_website" tabindex="-1" autocomplete="off" /></label>
+          <label class="field field-wide consent"><span><input type="checkbox" name="privacy_ack" value="accepted" required /> Concordo com o uso destes dados para responder ao meu pedido de trial, conforme a <a href="privacidade.html">política de privacidade</a>.</span></label>
+          <div class="form-actions"><button class="btn btn-primary btn-lg" type="submit">Receber o instalador</button><p class="form-note">Sem cartão. O link chega no seu e-mail em instantes — confira também a caixa de spam.</p></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="wrap section" id="seguranca">
+      <p class="kicker">Segurança levada a sério</p>
+      <h2>Controles claros, com limites explicados</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Controle de acesso rigoroso</h3>
+          <p>Autenticação, bloqueio após tentativas repetidas, verificação em duas etapas opcional e <strong>perfis de acesso separados</strong>. O perfil de visualização não recebe as credenciais das câmeras.</p>
+        </article>
+        <article class="card">
+          <h3>Comunicação protegida</h3>
+          <p>O acesso às imagens exige login e usa sessões de mídia temporárias. Para acesso pela rede, a proteção do transporte depende de <strong>HTTPS estar configurado</strong> na instalação.</p>
+        </article>
+        <article class="card">
+          <h3>Proteção de credenciais</h3>
+          <p>Credenciais de câmeras e integrações são <strong>armazenadas com criptografia em repouso</strong> e não são mostradas ao perfil de visualização.</p>
+        </article>
+        <article class="card">
+          <h3>Privacidade e LGPD</h3>
+          <p>Retenção configurável e rotinas de exclusão mantêm gravações e eventos só pelo prazo definido. Prazos e acessos ficam a cargo do responsável pela instalação.</p>
+        </article>
+      </div>
+      <p class="note">Detalhes na <a href="privacidade.html">política de privacidade</a>. A landing não usa rastreadores. Se você solicitar o trial, o relay recebe somente os campos do formulário. No aplicativo, Telegram envia foto e texto quando ativado; uma análise externa opcional pode enviar uma imagem ao serviço configurado; e a assinatura usa o Mercado Pago. Vídeo contínuo, gravações e base de rostos permanecem na máquina.</p>
+    </section>
+
+    <section class="wrap section" id="faq">
+      <p class="kicker">FAQ</p>
+      <h2>Perguntas frequentes</h2>
+      <details><summary>Preciso de GPU ou internet rápida?</summary><p>A detecção pode rodar na CPU, sem GPU dedicada. O desempenho depende do computador, da resolução e da quantidade de câmeras. Internet é necessária para integrações que você ativar, para assinatura e para acesso remoto configurado.</p></details>
+      <details><summary>Minhas imagens vão para serviços externos?</summary><p>Vídeo contínuo, gravações e base de rostos ficam na máquina. Se você ativar o Telegram, fotos de alertas são enviadas ao serviço. Se configurar uma análise externa opcional, uma imagem do evento pode ser enviada ao serviço escolhido.</p></details>
+      <details><summary>Funciona com minhas câmeras atuais?</summary><p>Se elas falam RTSP (maioria das IP) ou são webcams USB, sim. O cadastro é feito no painel do app com IP, porta, usuário e senha.</p></details>
+      <details><summary>Como funciona a licença?</summary><p>Ao abrir o aplicativo, você confirma seu e-mail e cria a senha local do administrador. Isso libera 14 dias de teste nesta instalação, sem cartão. Depois, a assinatura é ativada dentro do próprio app. A tolerância offline de 7 dias vale para assinaturas pagas; o trial termina ao fim dos 14 dias.</p></details>
+      <details><summary>Preciso de suporte presencial?</summary><p>Não. Todo o atendimento é online: o app guia o cadastro das câmeras, o desenho das zonas e a ativação da licença. Nada de técnico em casa ou hardware proprietário.</p></details>
+      <details><summary>O Windows bloqueou o instalador (SmartScreen)?</summary><p>O instalador atual ainda não é assinado digitalmente. Na tela azul do SmartScreen, clique em “Mais informações” e depois em “Executar assim mesmo”. Se quiser conferir a integridade do arquivo, compare o SHA256 informado no e-mail de download.</p></details>
+      <details><summary>O morador consegue mexer nas configurações?</summary><p>Não. O perfil de morador é exclusivo para visualização segura (ao vivo + histórico). Configurações de sistema, zonas e cadastro de rostos são restritos ao administrador/instalador.</p></details>
+      <details><summary>E se o disco encher?</summary><p>O sistema monitora o espaço livre de forma contínua, pausando gravações de forma preventiva para não sobrecarregar o disco e retomando automaticamente. A retenção inteligente descarta gravações antigas conforme a sua política definida.</p></details>
+    </section>
+
+    <section class="wrap cta">
+      <div class="cta-box">
+        <h2>Pronto para ver sua casa com outros olhos?</h2>
+        <p>Conte seu cenário e solicite acesso ao trial de 14 dias no seu próprio computador.</p>
+        <div class="cta-row"><a class="btn btn-primary btn-lg" href="#cadastro">Testar grátis por 14 dias</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <div><strong>Local Vision</strong><span> · Monitoramento inteligente com processamento local</span></div>
+      <nav aria-label="Rodapé"><a href="#requisitos">Requisitos</a><a href="#comparativo">Comparativo</a><a href="#faq">FAQ</a><a href="privacidade.html">Política de privacidade</a><a href="mailto:aldo.caetano@localvision.com.br">aldo.caetano@localvision.com.br</a></nav>
+      <small id="year">© Local Vision — processamento principal no seu computador.</small>
+    </div>
+  </footer>
+
+  <script src="assets/site.js?v=20260928" defer></script>
+</body>
+</html>
