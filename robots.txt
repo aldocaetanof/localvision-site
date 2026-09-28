@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://localvision.com.br/sitemap.xml
