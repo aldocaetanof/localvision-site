@@ -1,6 +1,6 @@
 {
-  "version": "0.1.4",
-  "url": "https://github.com/aldocaetanof/localvision-site/releases/download/v0.1.4/LocalVision-Setup-0.1.4.exe",
-  "sha256": "dbde83299bec238d59b77f86740604413fa82b0268e6a601a3fc0be336920da2",
-  "notes": "Login pelo e-mail do cadastro, recuperação de senha por e-mail e senhas mais fortes. Instalador não assinado: na tela azul do SmartScreen, Mais informações → Executar assim mesmo; confira o SHA256 acima."
+  "version": "0.1.5",
+  "url": "https://github.com/aldocaetanof/localvision-site/releases/download/v0.1.5/LocalVision-Setup-0.1.5.exe",
+  "sha256": "05b0062f3870b64724b06af3b806acb999ab18a0e088989b514abf13745cc26b",
+  "notes": "Pix pré-pago na tela Assinatura e correção do pagamento com cartão. Instalador não assinado: na tela azul do SmartScreen, Mais informações → Executar assim mesmo; confira o SHA256 acima."
 }
