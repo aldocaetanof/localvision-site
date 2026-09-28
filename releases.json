@@ -1,6 +1,6 @@
 {
-  "version": "0.1.2",
-  "url": "https://github.com/aldocaetanof/localvision-site/releases/download/v0.1.2/LocalVision-Setup-0.1.2.exe",
-  "sha256": "b8e254759f0ff787b40ebd7f679286e4917207b589b41f0d3a658fe96a7ed4cb",
-  "notes": "O app passa a usar sempre o próprio servidor, mesmo com a porta 8000 ocupada. Instalador não assinado: na tela azul do SmartScreen, Mais informações → Executar assim mesmo; confira o SHA256 acima."
+  "version": "0.1.3",
+  "url": "https://github.com/aldocaetanof/localvision-site/releases/download/v0.1.3/LocalVision-Setup-0.1.3.exe",
+  "sha256": "5b25b70a62a1260743dd513850371510a7e4d9422a210c6e9679daa7102a7bad",
+  "notes": "Atualização de segurança: login e acesso remoto mais protegidos. Instalador não assinado: na tela azul do SmartScreen, Mais informações → Executar assim mesmo; confira o SHA256 acima."
 }
