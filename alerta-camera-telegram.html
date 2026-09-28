@@ -1,0 +1,150 @@
+<!doctype html>
+<!-- Local Vision — guia: alerta da câmera no Telegram (página de conteúdo/SEO). -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Como receber alerta da câmera no Telegram (com foto) — Local Vision</title>
+  <link rel="canonical" href="https://localvision.com.br/alerta-camera-telegram.html" />
+  <meta name="description" content="Passo a passo para receber no Telegram um alerta com foto quando a câmera detectar uma pessoa: crie o bot no BotFather, pegue o Chat ID e ligue o alerta por câmera, sem mensalidade por câmera." />
+  <meta name="theme-color" content="#08101d" />
+  <meta property="og:title" content="Como receber alerta da câmera no Telegram (com foto)" />
+  <meta property="og:description" content="Crie o bot, pegue o Chat ID e receba no celular a foto de quem apareceu na câmera. Funciona com câmeras IP (RTSP) e webcams." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://localvision.com.br/alerta-camera-telegram.html" />
+  <meta property="og:site_name" content="Local Vision" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:image" content="https://localvision.com.br/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src https://cloudflareinsights.com; form-action 'none'; object-src 'none'; base-uri 'self'" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png?v=20260927-lens" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20260927-lens" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css?v=20260928b" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Como receber alerta da câmera no Telegram com foto",
+    "inLanguage": "pt-BR",
+    "totalTime": "PT10M",
+    "step": [
+      { "@type": "HowToStep", "name": "Crie um bot no BotFather", "text": "No Telegram, abra o @BotFather, envie /newbot, escolha nome e usuário e copie o token." },
+      { "@type": "HowToStep", "name": "Mande uma mensagem para o bot", "text": "Abra a conversa com o bot novo e envie qualquer mensagem, como “oi”." },
+      { "@type": "HowToStep", "name": "Cole o token no Local Vision", "text": "Em Credenciais, cole o token do bot e clique em Detectar Chat ID automaticamente." },
+      { "@type": "HowToStep", "name": "Teste o envio", "text": "Clique em Enviar mensagem de teste e confira se chegou no celular." },
+      { "@type": "HowToStep", "name": "Ligue o alerta nas câmeras", "text": "Ative Alertas Telegram nas câmeras desejadas e ajuste o intervalo para não receber alertas repetidos." }
+    ]
+  }
+  </script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "2425f0a6b76047ed88d276895d621326"}'></script>
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="./" aria-label="Local Vision — página inicial">
+        <img class="brand-mark" src="assets/logo-owl-refined.png?v=20260927-lens" width="36" height="36" alt="" />
+        <span class="brand-text">Local Vision<small>Monitoramento inteligente</small></span>
+      </a>
+      <div class="top-actions legal-actions">
+        <a class="btn btn-primary" href="./#cadastro">Testar grátis</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" class="wrap legal">
+    <p class="kicker">Guia</p>
+    <h1>Como receber alerta da câmera no Telegram, com foto</h1>
+    <p class="legal-lede">Quer que o celular avise quando alguém aparecer no portão, no quintal ou perto da piscina? Com o Local Vision, a câmera detecta a pessoa no seu computador e manda a foto do momento para o seu Telegram. A configuração leva uns 10 minutos e não tem mensalidade por câmera.</p>
+
+    <nav class="legal-toc" aria-label="Nesta página">
+      <a href="#precisa">O que você precisa</a>
+      <a href="#bot">1. Criar o bot</a>
+      <a href="#chat-id">2. Pegar o Chat ID</a>
+      <a href="#teste">3. Testar o envio</a>
+      <a href="#cameras">4. Ligar o alerta nas câmeras</a>
+      <a href="#duvidas">Dúvidas comuns</a>
+    </nav>
+
+    <section id="precisa">
+      <h2>O que você precisa</h2>
+      <ul>
+        <li>Um computador com <strong>Windows 10 ou 11 (64 bits)</strong> ligado onde estão as câmeras. Não precisa de placa de vídeo.</li>
+        <li><strong>Câmeras IP com RTSP</strong> (a maioria das Intelbras, Hikvision, Tapo e similares) ou <strong>webcams USB</strong>.</li>
+        <li>O <strong>Telegram</strong> instalado no celular.</li>
+        <li>O <strong>Local Vision</strong> instalado. O <a href="./#cadastro">trial é grátis por 14 dias</a>, sem cartão.</li>
+      </ul>
+    </section>
+
+    <section id="bot">
+      <h2>1. Criar o bot no BotFather</h2>
+      <p>O alerta chega por um bot só seu. Para criar:</p>
+      <ol>
+        <li>No Telegram, procure por <strong>@BotFather</strong> (o oficial tem o selo azul) e abra a conversa.</li>
+        <li>Envie <code>/newbot</code>.</li>
+        <li>Escolha um nome, por exemplo “Câmeras de Casa”, e um usuário terminado em <code>bot</code>, por exemplo <code>cameras_da_casa_bot</code>.</li>
+        <li>O BotFather responde com um <strong>token</strong>, um código parecido com <code>123456789:AAH...</code>. Copie esse código.</li>
+      </ol>
+      <p><strong>Guarde o token com cuidado:</strong> quem tiver esse código consegue mandar mensagens pelo seu bot.</p>
+    </section>
+
+    <section id="chat-id">
+      <h2>2. Pegar o Chat ID</h2>
+      <p>O Chat ID diz ao bot para quem mandar os alertas. O Local Vision descobre isso sozinho:</p>
+      <ol>
+        <li>Abra a conversa com o bot que você acabou de criar e envie qualquer mensagem, como “oi”.</li>
+        <li>No Local Vision, vá em <strong>Credenciais</strong> e cole o token em <strong>Token do Bot</strong>.</li>
+        <li>Clique em <strong>Detectar Chat ID automaticamente</strong>. O campo <strong>Chat ID de destino</strong> é preenchido.</li>
+        <li>Salve.</li>
+      </ol>
+      <p>Quer receber em um grupo da família? Adicione o bot ao grupo, mande uma mensagem no grupo e clique em detectar de novo.</p>
+    </section>
+
+    <section id="teste">
+      <h2>3. Testar o envio</h2>
+      <p>Ainda em Credenciais, clique em <strong>Enviar mensagem de teste</strong>. A mensagem deve chegar no celular em segundos. Se não chegar, confira se o computador está com internet e se você mandou mensagem para o bot antes de detectar o Chat ID.</p>
+    </section>
+
+    <section id="cameras">
+      <h2>4. Ligar o alerta nas câmeras</h2>
+      <p>O alerta é ligado câmera por câmera, para você escolher o que merece aviso:</p>
+      <ul>
+        <li>Ative <strong>Alertas Telegram</strong> na câmera. O alerta leva a foto do evento e uma mensagem curta.</li>
+        <li>Para não receber aviso de quem passa na rua, <strong>desenhe uma zona</strong> sobre a imagem (portão, muro, piscina). O alerta só dispara quando a pessoa entra na zona.</li>
+        <li>Cadastre os <strong>rostos</strong> de quem mora na casa para separar conhecidos de desconhecidos.</li>
+        <li>Ajuste o <strong>intervalo para repetir alerta</strong>. Assim, uma pessoa parada na frente da câmera não gera dezenas de mensagens.</li>
+      </ul>
+    </section>
+
+    <section id="duvidas">
+      <h2>Dúvidas comuns</h2>
+      <h3>O vídeo das câmeras vai para o Telegram?</h3>
+      <p>Não. A detecção roda no seu computador e só a <strong>foto do alerta</strong> e o texto vão para o Telegram. Vídeo contínuo e gravações ficam na máquina.</p>
+      <h3>Funciona com a minha câmera Intelbras, Hikvision ou Tapo?</h3>
+      <p>Se a câmera tem <strong>RTSP</strong>, funciona. Você cadastra no app com IP, porta, usuário e senha. Na Tapo, crie a “conta da câmera” no app da Tapo para liberar o RTSP.</p>
+      <h3>Precisa pagar por câmera?</h3>
+      <p>Não. A assinatura é por instalação, <a href="./#planos">a partir de R$ 29,92/mês no plano anual</a>, com quantas câmeras o computador aguentar.</p>
+      <h3>E se a internet cair?</h3>
+      <p>A detecção e a gravação continuam no computador. Os alertas do Telegram precisam de internet para serem enviados.</p>
+    </section>
+
+    <section class="cta-box" style="margin-top:48px">
+      <h2 style="margin-top:0">Teste grátis por 14 dias</h2>
+      <p>Receba o instalador por e-mail na hora. Sem cartão.</p>
+      <p><a class="btn btn-primary btn-lg" href="./#cadastro">Quero testar</a></p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <div><strong>Local Vision</strong><span> · Monitoramento inteligente com processamento local</span></div>
+      <nav aria-label="Rodapé"><a href="./">Página inicial</a><a href="privacidade.html">Política de privacidade</a><a href="termos.html">Termos de uso</a><a href="mailto:aldo.caetano@localvision.com.br">aldo.caetano@localvision.com.br</a></nav>
+      <small>© Local Vision — processamento principal no seu computador.</small>
+    </div>
+  </footer>
+</body>
+</html>
