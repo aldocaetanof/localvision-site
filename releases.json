@@ -1,6 +1,6 @@
 {
-  "version": "0.1.7",
-  "url": "https://github.com/aldocaetanof/localvision-site/releases/download/v0.1.7/LocalVision-Setup-0.1.7.exe",
-  "sha256": "9b09887372aa1ce76333c475b128c53498f7b1d369f9a3e71bfdeb33d524eba8",
-  "notes": "Ao vivo fluido, direto da câmera: sem travadas quando algo se move na imagem, com as marcações desenhadas por cima do vídeo. Inclui também o aviso de limites e a correção de falso alarme de escalada. Instalador não assinado: na tela azul do SmartScreen, Mais informações → Executar assim mesmo; confira o SHA256 acima."
+  "version": "0.1.8",
+  "url": "https://github.com/aldocaetanof/localvision-site/releases/download/v0.1.8/LocalVision-Setup-0.1.8.exe",
+  "sha256": "fb946e300821b3f2a90ac99ab1886852e1e4025ca2c3ca1d15382759487e020e",
+  "notes": "Ao vivo mais leve: a visualização usa o sub-stream da câmera, com menos travadas quando a rede oscila. As senhas das câmeras não aparecem mais nos logs. Instalador não assinado: na tela azul do SmartScreen, Mais informações → Executar assim mesmo; confira o SHA256 acima."
 }
