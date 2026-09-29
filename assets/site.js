@@ -114,6 +114,63 @@
     }
   };
 
+  var IS_EN = (document.documentElement.lang || "").toLowerCase().indexOf("en") === 0;
+  if (IS_EN) {
+    CAMS = {
+      "1": {
+        name: "CAM 01 · Gate",
+        chip: "● GATE",
+        provider: "Watch Agent · CPU",
+        colorClass: "cam-crit",
+        verdict: "ATTENTION NEEDED",
+        stateClass: "agent-state-warn",
+        summary: "Person with a hidden face approaching the perimeter.",
+        detect: "Hidden face + approach",
+        zone: "82%",
+        action: "Local · 43 ms · private image"
+      },
+      "2": {
+        name: "CAM 02 · Driveway",
+        chip: "● DRIVEWAY",
+        provider: "Watch Agent · CPU",
+        colorClass: "cam-info",
+        verdict: "PLATE IDENTIFIED",
+        stateClass: "agent-state-monitoring",
+        summary: "OCR finished reading plate ABC-1234 at the entrance.",
+        detect: "Vehicle + plate ABC-1234",
+        zone: "96%",
+        action: "Local · OCR complete"
+      },
+      "3": {
+        name: "CAM 03 · Hallway",
+        chip: "● HALLWAY",
+        provider: "Watch Agent · CPU",
+        colorClass: "cam-ok",
+        verdict: "FACE RECOGNIZED",
+        stateClass: "agent-state-monitoring",
+        summary: "John was recognized in the hallway; registered face, no alert triggered.",
+        detect: "Known face · John",
+        zone: "92%",
+        action: "Local · private face database"
+      },
+      "4": {
+        name: "CAM 04 · Kitchen",
+        chip: "● KITCHEN",
+        provider: "Watch Agent · CPU",
+        colorClass: "cam-warn",
+        verdict: "PET IN RESTRICTED ZONE",
+        stateClass: "agent-state-warn",
+        summary: "Dog detected entering the restricted zone next to the trash can.",
+        detect: "Pet (Dog) + Trash zone",
+        zone: "92%",
+        action: "Local · Pet alert triggered"
+      }
+    };
+  }
+  var CAM1_MONITORING = IS_EN
+    ? { verdict: "MONITORING", text: "Person detected; analyzing the visual context of the approach.", detect: "Person in field of view", zone: "Calculating…", action: "Local · CPU · private image" }
+    : { verdict: "MONITORANDO", text: "Pessoa detectada; analisando o contexto visual da aproximação.", detect: "Pessoa no campo de visão", zone: "Calculando…", action: "Local · CPU · imagem privada" };
+
   function selectCam(camId, skipVideoSync) {
     var data = CAMS[String(camId)];
     if (!data) return;
@@ -188,11 +245,11 @@
       stateEl.classList.remove("agent-state-warn", "agent-state-critical");
       stateEl.classList.add("agent-state-monitoring");
     }
-    if (verdictEl) verdictEl.textContent = "MONITORANDO";
-    if (textEl) textEl.textContent = "Pessoa detectada; analisando o contexto visual da aproximação.";
-    if (dEl) dEl.textContent = "Pessoa no campo de visão";
-    if (zEl) zEl.textContent = "Calculando…";
-    if (aEl) aEl.textContent = "Local · CPU · imagem privada";
+    if (verdictEl) verdictEl.textContent = CAM1_MONITORING.verdict;
+    if (textEl) textEl.textContent = CAM1_MONITORING.text;
+    if (dEl) dEl.textContent = CAM1_MONITORING.detect;
+    if (zEl) zEl.textContent = CAM1_MONITORING.zone;
+    if (aEl) aEl.textContent = CAM1_MONITORING.action;
   }
 
   function syncCam1WithVideo(video) {

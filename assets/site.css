@@ -55,6 +55,8 @@ a { color: var(--accent); }
 .btn-ghost { border-color: var(--border); color: var(--text-primary); background: var(--bg-surface); }
 .btn-ghost:hover { border-color: var(--accent); }
 .btn-lg { padding: 14px 24px; font-size: 17px; }
+.lang-switch { display: inline-flex; align-items: center; gap: 6px; padding: 7px 11px; border: 1px solid var(--border); border-radius: 8px; color: var(--text-secondary); background: var(--bg-surface); font-size: 13px; font-weight: 600; letter-spacing: .04em; text-decoration: none; transition: color .2s ease, border-color .2s ease; }
+.lang-switch:hover { color: var(--text-primary); border-color: var(--accent); }
 .menu-btn { display: none; background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; }
 .hero { display: grid; grid-template-columns: minmax(380px, 460px) minmax(500px, 1.35fr); gap: 44px; padding: 64px 24px 40px; align-items: center; }
 .pill { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; color: var(--text-secondary); background: var(--bg-surface); font-size: 14px; }
@@ -775,6 +777,8 @@ summary::marker { color: var(--accent); }
 .foot { background: rgba(5,13,23,.4); }
 @keyframes scan { 0%, 15% { transform: translateX(-75%); } 52%, 100% { transform: translateX(145%); } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+/* EN: título quebra em mais linhas; sem isso o card centralizado desce em relação ao texto */
+@media (min-width: 1025px) { html[lang="en"] .hero-card { align-self: start; margin-top: 66px; } }
 @media (max-width: 1024px) {
   .hero { min-height: 0; grid-template-columns: 1fr; gap: 40px; padding-top: 60px; }
   .hero-card { max-width: 760px; width: 100%; margin: 0 auto; transform: none; }

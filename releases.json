@@ -1,6 +1,6 @@
 {
-  "version": "0.1.5",
-  "url": "https://github.com/aldocaetanof/localvision-site/releases/download/v0.1.5/LocalVision-Setup-0.1.5.exe",
-  "sha256": "05b0062f3870b64724b06af3b806acb999ab18a0e088989b514abf13745cc26b",
-  "notes": "Pix pré-pago na tela Assinatura e correção do pagamento com cartão. Instalador não assinado: na tela azul do SmartScreen, Mais informações → Executar assim mesmo; confira o SHA256 acima."
+  "version": "0.1.7",
+  "url": "https://github.com/aldocaetanof/localvision-site/releases/download/v0.1.7/LocalVision-Setup-0.1.7.exe",
+  "sha256": "9b09887372aa1ce76333c475b128c53498f7b1d369f9a3e71bfdeb33d524eba8",
+  "notes": "Ao vivo fluido, direto da câmera: sem travadas quando algo se move na imagem, com as marcações desenhadas por cima do vídeo. Inclui também o aviso de limites e a correção de falso alarme de escalada. Instalador não assinado: na tela azul do SmartScreen, Mais informações → Executar assim mesmo; confira o SHA256 acima."
 }
