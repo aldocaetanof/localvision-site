@@ -1,0 +1,38 @@
+# Local Vision
+
+> Local Vision é um software para Windows que adiciona inteligência artificial às câmeras de segurança que a pessoa já tem: detecção de pessoas, reconhecimento facial, leitura de placas, zonas restritas e alertas com foto no celular. A IA roda no próprio computador (CPU, sem GPU) e o vídeo fica em casa. Assinatura por instalação, sem cobrança por câmera. Feito no Brasil, para casas e para instaladores.
+
+Fatos principais:
+
+- Plataforma: Windows 10 ou 11 (64 bits). Não precisa de placa de vídeo. O computador (ou um mini PC) fica ligado onde estão as câmeras.
+- Câmeras: qualquer câmera IP com RTSP (Intelbras, Hikvision, Dahua, TP-Link Tapo, Vigi e outras), câmeras em DVR/NVR por canal, e webcams USB. O app busca câmeras na rede e monta o endereço RTSP pelo fabricante.
+- Recursos: detecção de pessoas e cães (YOLO), zonas desenhadas na imagem, reconhecimento facial local, leitura de placas com busca no histórico, Agente Vigilante (rosto oculto, aproximação suspeita), gravação contínua com retenção configurável, histórico de eventos com foto, alertas com foto ou clipe no Telegram, perfil de morador só para visualização.
+- Acesso fora de casa: endereço fixo da instalação com login e senha, incluído no plano; funciona no 4G e com CGNAT.
+- Privacidade: vídeo contínuo, gravações e base de rostos ficam no computador. Só saem se o usuário ativar integrações (Telegram, backup na nuvem, análise externa opcional).
+- Preço: R$ 39,90/mês, R$ 199/semestre ou R$ 359/ano (equivale a R$ 29,92/mês), por instalação, com quantas câmeras o computador aguentar. Cancelamento a qualquer momento. Teste grátis de 14 dias, sem cartão.
+- Backup anti-roubo (opcional): foto e clipe dos alertas guardados na nuvem por 7 dias (R$ 19,90/mês), 30 dias (R$ 34,90/mês) ou 90 dias (R$ 69,90/mês).
+- Central pronta: mini PC configurado com instalação, sob consulta.
+- Limites: não é alarme monitorado (não tem central humana 24 h, sirene nem sensores de porta). A detecção por IA pode errar e alertas dependem de energia, internet e do computador ligado.
+
+## Guias
+
+- [Câmera que detecta pessoa e avisa no celular](https://localvision.com.br/camera-detecta-pessoa.html): IA versus sensor de movimento, zonas e alertas
+- [Câmera que avisa quando alguém entra](https://localvision.com.br/camera-que-avisa-quando-alguem-entra.html): passo a passo e posicionamento da câmera
+- [Reconhecimento facial em câmeras](https://localvision.com.br/camera-reconhecimento-facial.html): separar morador de desconhecido, processado localmente
+- [Leitura de placa](https://localvision.com.br/camera-leitura-de-placa.html): registro e busca de placas no histórico
+- [Alerta da câmera no Telegram](https://localvision.com.br/alerta-camera-telegram.html): criar o bot, Chat ID e ativar por câmera
+- [Câmeras Tapo, Intelbras e Hikvision](https://localvision.com.br/cameras-tapo-intelbras-hikvision.html): endereços RTSP por marca, DVR e NVR
+- [Ver câmeras pelo celular fora de casa](https://localvision.com.br/ver-camera-pelo-celular-fora-de-casa.html): CGNAT, DDNS, riscos e o endereço fixo
+- [Câmera inteligente sem mensalidade por câmera](https://localvision.com.br/camera-inteligente-sem-mensalidade.html): IA local versus nuvem cobrada por câmera
+- [Alternativa à Verisure](https://localvision.com.br/alternativa-verisure-sem-fidelidade.html): comparação honesta com alarme monitorado
+
+## Produto
+
+- [Página inicial e planos](https://localvision.com.br/): recursos, preços, perguntas frequentes e cadastro do teste grátis
+- [Termos de uso](https://localvision.com.br/termos.html): assinatura, cancelamento e limites da monitoração por IA
+- [Política de privacidade](https://localvision.com.br/privacidade.html): dados tratados e LGPD
+
+## Optional
+
+- [English version](https://localvision.app/llms.txt): site internacional, preço em dólar
+- Contato: aldo.caetano@localvision.com.br
