@@ -981,6 +981,9 @@ html[data-theme="light"] .cta-box::before,
 html[data-theme="light"] .cta-box::after { border-color: rgba(31,111,214,.12); }
 html[data-theme="light"] .foot { background: rgba(255,255,255,.6); }
 html[data-theme="light"] .legal a { color: var(--accent); }
+/* Mais específico que a regra acima: sem isto o botão primário das páginas
+   .legal (instalar/download/trial-recebido) fica com texto azul no fundo azul. */
+html[data-theme="light"] .legal a.btn-primary { color: #fff; }
 html[data-theme="light"] .wa-fab { box-shadow: 0 10px 24px rgba(13,27,46,.2); }
 html[data-theme="light"] .wa-fab:focus-visible { outline-color: var(--text-primary); }
 

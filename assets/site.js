@@ -69,6 +69,15 @@
     box.setAttribute("data-sitekey", sitekey);
     box.setAttribute("data-language", (document.documentElement.lang || "auto").toLowerCase());
     box.setAttribute("data-theme", "auto");
+    // Clique antes de o token existir: o envio fica pendente e segue sozinho
+    // quando a verificação termina (antes exigia um segundo clique).
+    var pending = false;
+    window.lvTurnstileDone = function () {
+      if (!pending) return;
+      pending = false;
+      form.submit(); // não dispara "submit" de novo; a validação já passou
+    };
+    box.setAttribute("data-callback", "lvTurnstileDone");
     form.insertBefore(box, actions);
     var s = document.createElement("script");
     s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
@@ -79,11 +88,12 @@
       var token = form.querySelector('[name="cf-turnstile-response"]');
       if (token && token.value) return;
       ev.preventDefault();
+      pending = true;
       var note = form.querySelector(".form-note");
       if (note) {
         note.textContent = /^en/i.test(document.documentElement.lang)
-          ? "Please wait for the security check to finish, then submit again."
-          : "Aguarde a verificação de segurança terminar e envie de novo.";
+          ? "Finishing the security check… your request will be sent automatically."
+          : "Concluindo a verificação de segurança… o envio continua sozinho.";
       }
     });
   }
