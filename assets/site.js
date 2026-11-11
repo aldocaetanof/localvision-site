@@ -57,9 +57,35 @@
     // Em desenvolvimento (arquivo local ou relay Python em 127.0.0.1), envia ao
     // relay local; publicado, mantém o action do HTML (relay no Supabase).
     var host = window.location.hostname;
-    if (window.location.protocol === "file:" || host === "127.0.0.1" || host === "localhost") {
-      form.action = "http://127.0.0.1:9000/trial-interest";
-    }
+    var local = window.location.protocol === "file:" || host === "127.0.0.1" || host === "localhost";
+    if (local) form.action = "http://127.0.0.1:9000/trial-interest";
+    // Cloudflare Turnstile (anti-bot): o relay exige o token quando tem
+    // TURNSTILE_SECRET. Sem chave no HTML (ou em dev local), o widget não sobe.
+    var sitekey = form.getAttribute("data-turnstile-sitekey") || "";
+    if (local || !/^0x[0-9A-Za-z_-]{10,}$/.test(sitekey)) return;
+    var actions = form.querySelector(".form-actions");
+    var box = document.createElement("div");
+    box.className = "cf-turnstile field-wide";
+    box.setAttribute("data-sitekey", sitekey);
+    box.setAttribute("data-language", (document.documentElement.lang || "auto").toLowerCase());
+    box.setAttribute("data-theme", "auto");
+    form.insertBefore(box, actions);
+    var s = document.createElement("script");
+    s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+    s.async = true;
+    s.defer = true;
+    document.head.appendChild(s);
+    form.addEventListener("submit", function (ev) {
+      var token = form.querySelector('[name="cf-turnstile-response"]');
+      if (token && token.value) return;
+      ev.preventDefault();
+      var note = form.querySelector(".form-note");
+      if (note) {
+        note.textContent = /^en/i.test(document.documentElement.lang)
+          ? "Please wait for the security check to finish, then submit again."
+          : "Aguarde a verificação de segurança terminar e envie de novo.";
+      }
+    });
   }
 
   /* Demonstração interativa do Agente Vigilante */
@@ -199,6 +225,8 @@
 
     var provTag = document.getElementById("agentProviderTag");
     if (provTag) provTag.textContent = data.provider;
+    var camPill = document.getElementById("agentCamPill");
+    if (camPill) camPill.textContent = data.chip;
 
     var panelEl = document.getElementById("agentPanel");
     var stateEl = document.getElementById("agentState");
@@ -312,10 +340,32 @@
     startAutoplay();
   }
 
+  // Calculadora de locais (plano casa): total = locais × preço do plano.
+  // Os valores são só exibição; o relay calcula o valor cobrado de verdade.
+  function locationsCalc() {
+    var root = document.getElementById("calc-locais");
+    if (!root) return;
+    var input = root.querySelector("input[type=number]");
+    var out = root.querySelector("[data-total]");
+    var unit = { monthly: 39.9, annual: 359 };
+    function fmt(v) {
+      return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    }
+    function render() {
+      var n = Math.max(1, Math.min(20, parseInt(input.value, 10) || 1));
+      out.textContent = n === 1
+        ? "1 local: " + fmt(unit.monthly) + "/mês ou " + fmt(unit.annual) + "/ano"
+        : n + " locais: " + fmt(unit.monthly * n) + "/mês ou " + fmt(unit.annual * n) + "/ano";
+    }
+    input.addEventListener("input", render);
+    render();
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     setYear();
     menu();
     activeNav();
+    locationsCalc();
     trialForm();
     initInteractiveDemo();
   });

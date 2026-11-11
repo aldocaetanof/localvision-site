@@ -1,0 +1,98 @@
+<!doctype html>
+<!-- Local Vision — visualizador dos alertas guardados na Nuvem (spec 144-3). -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nuvem — Local Vision</title>
+  <link rel="canonical" href="https://localvision.com.br/nuvem.html" />
+  <meta name="description" content="Veja os alertas do seu Local Vision guardados na Nuvem, mesmo com o computador desligado." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#08101d" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.r2.cloudflarestorage.com; media-src https://*.r2.cloudflarestorage.com; connect-src https://cloudflareinsights.com https://szsdhiimvrjerkvtqwzw.supabase.co; form-action 'none'; object-src 'none'; base-uri 'self'" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png?v=20260927-lens" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20260927-lens" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css?v=20261027" />
+  <script src="assets/theme.js?v=20261027"></script>
+  <style>
+    .cloud { padding-top: 32px; padding-bottom: 64px; }
+    .cloud h1 { margin: 6px 0 8px; }
+    .cloud-login { max-width: 460px; display: grid; gap: 14px; margin-top: 22px; }
+    .cloud-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 20px 0; }
+    .cloud-bar .grow { flex: 1 1 auto; color: var(--text-secondary); font-size: 14px; }
+    .cloud-bar select { border: 1px solid var(--border); border-radius: 9px; background: var(--bg-surface); color: var(--text-primary); padding: 9px 10px; font: inherit; }
+    .cloud-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .cloud-item { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+    .cloud-item img, .cloud-item video { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #000; display: block; }
+    .cloud-item .meta { padding: 12px 14px 4px; display: grid; gap: 2px; }
+    .cloud-item .meta strong { font-size: 15px; }
+    .cloud-item .meta span { color: var(--text-secondary); font-size: 13px; }
+    .cloud-item .actions { display: flex; gap: 8px; flex-wrap: wrap; padding: 10px 14px 14px; }
+    .cloud-item .actions .btn { padding: 7px 12px; font-size: 13px; cursor: pointer; font: inherit; font-size: 13px; }
+    .cloud-msg { color: var(--text-secondary); margin: 14px 0; }
+    .cloud-msg.err { color: #e5484d; }
+    .btn[disabled] { opacity: .6; cursor: default; }
+    [hidden] { display: none !important; }
+  </style>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "2425f0a6b76047ed88d276895d621326"}'></script>
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="./" aria-label="Local Vision — página inicial">
+        <img class="brand-mark" src="assets/logo-owl-refined.png?v=20260927-lens" width="36" height="36" alt="" />
+        <span class="brand-text">Local Vision<small>Monitoramento inteligente</small></span>
+      </a>
+      <div class="top-actions legal-actions">
+        <button class="btn btn-ghost" type="button" id="logout" hidden>Sair</button>
+        <a class="btn btn-ghost" href="./">Voltar ao site</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" class="wrap cloud" data-relay="https://szsdhiimvrjerkvtqwzw.supabase.co/functions/v1/relay">
+    <p class="kicker">Nuvem</p>
+    <h1>Seus alertas guardados</h1>
+    <p class="sub">Fotos e clipes dos alertas ficam na Nuvem pelo prazo do seu plano, mesmo com o computador desligado ou fora de casa.</p>
+
+    <section id="login" aria-labelledby="login-title">
+      <h2 id="login-title" class="kicker" style="margin-top:24px">Entrar</h2>
+      <form class="cloud-login" id="emailForm" novalidate>
+        <label class="field"><span>E-mail cadastrado no Local Vision</span><input type="email" name="email" autocomplete="email" maxlength="254" required /></label>
+        <button class="btn btn-primary" type="submit">Receber código por e-mail</button>
+      </form>
+      <form class="cloud-login" id="codeForm" hidden novalidate>
+        <label class="field"><span>Código de 6 dígitos enviado para <b id="codeEmail"></b></span><input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="\d{6}" maxlength="6" required /></label>
+        <button class="btn btn-primary" type="submit">Entrar</button>
+        <button class="btn btn-ghost" type="button" id="backToEmail">Usar outro e-mail</button>
+      </form>
+      <p class="cloud-msg" id="loginMsg" role="status"></p>
+    </section>
+
+    <section id="list" hidden aria-label="Alertas na Nuvem">
+      <div class="cloud-bar">
+        <span class="grow" id="retention"></span>
+        <label><select id="camFilter" aria-label="Filtrar por câmera"><option value="">Todas as câmeras</option></select></label>
+        <button class="btn btn-ghost" type="button" id="refresh">Atualizar</button>
+      </div>
+      <div class="cloud-grid" id="grid"></div>
+      <p class="cloud-msg" id="listMsg" role="status"></p>
+      <button class="btn btn-ghost" type="button" id="more" hidden>Carregar mais</button>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <div><strong>Local Vision</strong><span> · Monitoramento inteligente com processamento local</span></div>
+      <nav aria-label="Rodapé"><a href="./">Página inicial</a><a href="privacidade.html">Política de privacidade</a><a href="termos.html">Termos de uso</a><a href="mailto:aldo.caetano@localvision.com.br">aldo.caetano@localvision.com.br</a></nav>
+      <small>© Local Vision — processamento principal no seu computador.</small>
+    </div>
+  </footer>
+  <script src="assets/nuvem.js?v=20261018"></script>
+</body>
+</html>

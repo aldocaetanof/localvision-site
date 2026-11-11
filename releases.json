@@ -1,6 +1,6 @@
 {
-  "version": "0.1.8",
-  "url": "https://github.com/aldocaetanof/localvision-site/releases/download/v0.1.8/LocalVision-Setup-0.1.8.exe",
-  "sha256": "fb946e300821b3f2a90ac99ab1886852e1e4025ca2c3ca1d15382759487e020e",
-  "notes": "Ao vivo mais leve: a visualização usa o sub-stream da câmera, com menos travadas quando a rede oscila. As senhas das câmeras não aparecem mais nos logs. Instalador não assinado: na tela azul do SmartScreen, Mais informações → Executar assim mesmo; confira o SHA256 acima."
+  "version": "0.1.9",
+  "url": "https://github.com/aldocaetanof/localvision-site/releases/download/v0.1.9/LocalVision-Setup-0.1.9.exe",
+  "sha256": "8ef89bbdd330feca98eea4bbdc66198eae0db285f1d815f167e23a95d59f63c9",
+  "notes": "Alertas no Telegram com clipe em vídeo logo após a foto, tema claro e escuro, ao vivo mais estável e Nuvem opcional. \"Assinar agora\" abre o Mercado Pago direto e \"Já paguei\" libera mesmo com confirmação atrasada. Corrige erro ao salvar câmera numa instalação nova. Instalador não assinado: na tela azul do SmartScreen, Mais informações → Executar assim mesmo; confira o SHA256 acima."
 }
