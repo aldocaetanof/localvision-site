@@ -106,7 +106,9 @@
       kpi("Cancelamentos", NF.format(o.cancelled), deltaText(o.cancelled, p.cancelled, dl.cancelled)),
       kpi("Assinaturas ativas", NF.format(o.paying), NF.format(o.paying_locations) + " locais cobertos"),
       kpi("MRR (R$)", BRL.format(o.mrr_brl), "ARR " + BRL.format(o.arr_brl)),
-    ]).join("");
+    ]).concat(o.active_7d != null
+      ? [kpi("Instalações ativas (7 dias)", NF.format(o.active_7d), "de " + NF.format(d.usage.opted_in) + " com estatísticas ligadas")]
+      : []).join("");
   }
 
   // ── Funil ────────────────────────────────────────────────────────────────
@@ -324,10 +326,67 @@
       hbars(webRows(w.devices, function (k) { return DEVICE[k] || k || "Desconhecido"; }), "Sem visitas no período.");
   }
 
+  // ── Uso do produto (telemetria opt-in, 152-4) ────────────────────────────
+  // Chaves vêm de enums fechados no relay; ainda assim tudo passa por esc().
+  var FN = {
+    person_detection: "Pessoas", dog_detection: "Pets", face_recognition: "Rostos",
+    wall_perimeter: "Vigilância IA (muro)", delivery_detection: "Entregas", plate_recognition: "Placas (LPR)",
+  };
+  var DIST = { installer: "Instalador", msix: "Microsoft Store", docker: "Docker", source: "Código-fonte" };
+  var TELEGRAM = { off: "Telegram desligado", photo: "Telegram: foto", clip: "Telegram: clipe" };
+  var LIVE = { go2rtc: "Ao vivo por repasse (go2rtc)", aiortc: "Ao vivo anotado (aiortc)" };
+  var VLM = { none: "Sem IA de vigilância", gemini: "IA: Gemini", ollama: "IA: Ollama (local)", mobileclip2: "IA: MobileCLIP2 (local)" };
+  function labeled(pairs, map) {
+    return (pairs || []).map(function (p) { return [map[p[0]] || p[0], p[1]]; });
+  }
+  function renderUsage(d) {
+    var u = d.usage;
+    var on = !!(u && u.opted_in);
+    $("useOn").hidden = !on;
+    $("useOff").hidden = on;
+    if (!on) {
+      $("useOff").innerHTML = '<h3 class="kicker" style="margin:0 0 6px">Nenhuma instalação compartilhando</h3><p class="ops-note">' +
+        "As estatísticas de uso são opcionais (desligadas por padrão). Aparecem aqui quando alguém liga no cadastro ou em Configurações → Aplicativo → Privacidade.</p>";
+      return;
+    }
+    var n = u.opted_in;
+    $("useNote").textContent = "ativas: 24 h " + NF.format(u.active.d1) + " · 7 dias " + NF.format(u.active.d7) +
+      " · 30 dias " + NF.format(u.active.d30);
+    var inst = [{ key: "installs", label: "Instalações", color: "--s1" }];
+    var alerts = [{ key: "alerts", label: "Alertas", color: "--s2" }];
+    legend($("useLegend"), inst);
+    legend($("alertLegend"), alerts);
+    lineChart($("useDaily"), u.daily, function (r) { return fmtDay(r.day); }, inst);
+    lineChart($("alertDaily"), u.daily, function (r) { return fmtDay(r.day); }, alerts);
+    table($("useTable"), ["Dia", "Instalações", "Alertas"], u.daily.slice().reverse().map(function (r) {
+      return [fmtDay(r.day), NF.format(r.installs), NF.format(r.alerts)];
+    }));
+    $("fnNote").textContent = "instalações com a função em ≥ 1 câmera, de " + NF.format(n);
+    $("useFns").innerHTML = hbars(labeled(u.function_adoption, FN), "Nenhuma função ligada.");
+    $("camNote").textContent = NF.format(u.cameras_total) + " câmeras no total";
+    $("useCams").innerHTML = hbars((u.cameras_hist || []).map(function (h) {
+      return [h[0] + (h[0] === "1" ? " câmera" : " câmeras"), h[1]];
+    }));
+    $("useVersions").innerHTML =
+      '<p class="ops-note" style="margin:0 0 6px">Versão</p>' + hbars(u.versions) +
+      '<p class="ops-note" style="margin:14px 0 6px">Distribuição</p>' + hbars(labeled(u.dist, DIST)) +
+      '<p class="ops-note" style="margin:14px 0 6px">Processamento</p>' + hbars(labeled(u.gpu, { gpu: "GPU", cpu: "CPU" }));
+    var extras = [
+      ["Nuvem ativa", u.cloud], ["Acesso remoto (túnel)", u.tunnel],
+      ["Com usuário visualizador", u.with_viewers], ["Com rostos cadastrados", u.with_faces],
+    ].sort(function (a, b) { return b[1] - a[1]; });
+    $("useFeatures").innerHTML =
+      '<p class="ops-note" style="margin:0 0 6px">Alertas</p>' + hbars(labeled(u.telegram, TELEGRAM)) +
+      '<p class="ops-note" style="margin:14px 0 6px">Ao vivo</p>' + hbars(labeled(u.live, LIVE)) +
+      '<p class="ops-note" style="margin:14px 0 6px">IA de vigilância</p>' + hbars(labeled(u.vlm, VLM)) +
+      '<p class="ops-note" style="margin:14px 0 6px">Outros</p>' + hbars(extras);
+  }
+
   // ── Render ───────────────────────────────────────────────────────────────
   function render(d) {
     renderKpis(d);
     renderWeb(d);
+    renderUsage(d);
     renderFunnel(d);
 
     var dailySeries = [

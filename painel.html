@@ -219,8 +219,44 @@
         </div>
       </div>
 
-      <h2 class="section-title">Em breve</h2>
-      <div class="panel soon" style="margin-top:12px"><h3 class="kicker" style="margin:0 0 6px">Uso do produto</h3><p class="ops-note">Instalações ativas, versões e funções usadas (telemetria opcional) — iteração 152-4.</p></div>
+      <h2 class="section-title">Uso do produto</h2>
+      <div id="useOff" class="panel soon" style="margin-top:12px" hidden></div>
+      <div id="useOn" hidden>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-head"><h3 class="kicker" style="margin:0">Instalações que enviaram por dia</h3><p id="useNote"></p></div>
+            <ul class="legend" id="useLegend"></ul>
+            <div class="chart" id="useDaily"></div>
+            <details class="tv"><summary>Ver tabela</summary><div class="tbl-wrap" id="useTable"></div></details>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3 class="kicker" style="margin:0">Alertas por dia</h3><p>todas as instalações</p></div>
+            <ul class="legend" id="alertLegend"></ul>
+            <div class="chart" id="alertDaily"></div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-head"><h3 class="kicker" style="margin:0">Funções em uso</h3><p id="fnNote"></p></div>
+            <div id="useFns"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3 class="kicker" style="margin:0">Câmeras por instalação</h3><p id="camNote"></p></div>
+            <div id="useCams"></div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-head"><h3 class="kicker" style="margin:0">Versões e distribuição</h3><p>instalações</p></div>
+            <div id="useVersions"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3 class="kicker" style="margin:0">Recursos</h3><p>instalações</p></div>
+            <div id="useFeatures"></div>
+          </div>
+        </div>
+        <p class="ops-note">Só instalações que ligaram "Compartilhar estatísticas anônimas de uso", contadas pelo envio mais recente dos últimos 30 dias (independe do período acima).</p>
+      </div>
 
       <h2 class="section-title">Atividade recente</h2>
       <div class="panel" style="margin-top:12px">
