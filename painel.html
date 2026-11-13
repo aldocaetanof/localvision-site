@@ -37,10 +37,10 @@
     .seg button[aria-pressed="true"] { background: var(--accent-faint); color: var(--text-primary); }
     .ops .btn-sm { padding: 8px 13px; font-size: 13px; min-height: 36px; cursor: pointer; font-family: inherit; }
 
-    .kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: 12px; }
+    .kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); gap: 12px; }
     .kpi { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 14px 16px; display: grid; gap: 4px; min-width: 0; }
     .kpi .label { color: var(--text-secondary); font-size: 12.5px; font-weight: 600; }
-    .kpi .value { font-size: 26px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    .kpi .value { font-size: 26px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .kpi .delta { font-size: 12.5px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
     .kpi .delta b { font-weight: 700; color: var(--text-primary); }
 
@@ -76,6 +76,7 @@
 
     .hbars { display: grid; gap: 7px; }
     .hbar { display: grid; grid-template-columns: minmax(80px, 30%) 1fr auto; gap: 10px; align-items: center; font-size: 13px; }
+    .hbar .k { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .hbar .track { height: 14px; position: relative; }
     .hbar .track span { position: absolute; inset: 0 auto 0 0; background: var(--s1); border-radius: 0 4px 4px 0; min-width: 2px; }
     .hbar .n { font-variant-numeric: tabular-nums; font-weight: 600; }
@@ -99,7 +100,9 @@
     .soon { border-style: dashed; }
     [hidden] { display: none !important; }
     @media (max-width: 560px) {
-      .kpi .value { font-size: 22px; }
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .kpi { padding: 12px; }
+      .kpi .value { font-size: 20px; }
       .fstep { grid-template-columns: 1fr; gap: 4px; }
       .fconv { grid-column: 1; }
     }
@@ -149,6 +152,33 @@
 
       <div class="kpis" id="kpis"></div>
 
+      <h2 class="section-title">Site</h2>
+      <div id="webOff" class="panel soon" style="margin-top:12px" hidden></div>
+      <div id="webOn" hidden>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-head"><h3 class="kicker" style="margin:0">Visitas por dia</h3><p id="webNote"></p></div>
+            <ul class="legend" id="webLegend"></ul>
+            <div class="chart" id="webDaily"></div>
+            <details class="tv"><summary>Ver tabela</summary><div class="tbl-wrap" id="webTable"></div></details>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3 class="kicker" style="margin:0">Páginas mais visitadas</h3><p>visitas</p></div>
+            <div id="webPages"></div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-head"><h3 class="kicker" style="margin:0">De onde vieram</h3><p>visitas</p></div>
+            <div id="webRefs"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3 class="kicker" style="margin:0">Países e dispositivos</h3><p>visitas</p></div>
+            <div id="webAudience"></div>
+          </div>
+        </div>
+      </div>
+
       <h2 class="section-title">Funil</h2>
       <div class="grid2">
         <div class="panel">
@@ -190,10 +220,7 @@
       </div>
 
       <h2 class="section-title">Em breve</h2>
-      <div class="grid2">
-        <div class="panel soon"><h3 class="kicker" style="margin:0 0 6px">Visitas no site</h3><p class="ops-note">Cloudflare Web Analytics no painel — iteração 152-3.</p></div>
-        <div class="panel soon"><h3 class="kicker" style="margin:0 0 6px">Uso do produto</h3><p class="ops-note">Instalações ativas, versões e funções usadas (telemetria opcional) — iteração 152-4.</p></div>
-      </div>
+      <div class="panel soon" style="margin-top:12px"><h3 class="kicker" style="margin:0 0 6px">Uso do produto</h3><p class="ops-note">Instalações ativas, versões e funções usadas (telemetria opcional) — iteração 152-4.</p></div>
 
       <h2 class="section-title">Atividade recente</h2>
       <div class="panel" style="margin-top:12px">

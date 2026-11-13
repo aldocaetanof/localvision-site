@@ -20,8 +20,12 @@
   var PCT = new Intl.NumberFormat("pt-BR", { style: "percent", maximumFractionDigits: 1 });
   var PLAN = { monthly: "Mensal", semiannual: "Semestral", annual: "Anual" };
   var PROVIDER = { mp: "Mercado Pago (R$)", paddle: "Paddle (US$)" };
+  var DEVICE = { desktop: "Computador", mobile: "Celular", tablet: "Tablet", smarttv: "TV" };
+  var REGION = (function () {
+    try { return new Intl.DisplayNames(["pt-BR"], { type: "region" }); } catch (e) { return null; }
+  })();
   var STEP = {
-    trial_requests: "Pedidos de trial", trial_installed: "Instalaram",
+    visits: "Visitas no site", trial_requests: "Pedidos de trial", trial_installed: "Instalaram",
     registrations: "Cadastros no app", verified: "Confirmados", paying: "Pagantes",
   };
 
@@ -93,14 +97,16 @@
   }
   function renderKpis(d) {
     var o = d.overview, p = o.previous, dl = o.deltas;
-    $("kpis").innerHTML = [
+    var web = o.visits != null
+      ? [kpi("Visitas no site", NF.format(o.visits), deltaText(o.visits, p.visits, dl.visits))] : [];
+    $("kpis").innerHTML = web.concat([
       kpi("Pedidos de trial", NF.format(o.trials), deltaText(o.trials, p.trials, dl.trials)),
       kpi("Cadastros confirmados", NF.format(o.verified), deltaText(o.verified, p.verified, dl.verified)),
       kpi("Novos pagantes", NF.format(o.new_paying), deltaText(o.new_paying, p.new_paying, dl.new_paying)),
       kpi("Cancelamentos", NF.format(o.cancelled), deltaText(o.cancelled, p.cancelled, dl.cancelled)),
       kpi("Assinaturas ativas", NF.format(o.paying), NF.format(o.paying_locations) + " locais cobertos"),
       kpi("MRR (R$)", BRL.format(o.mrr_brl), "ARR " + BRL.format(o.arr_brl)),
-    ].join("");
+    ]).join("");
   }
 
   // ── Funil ────────────────────────────────────────────────────────────────
@@ -111,12 +117,14 @@
     var by = {};
     d.funnel.steps.forEach(function (s) { by[s.key] = s.count; });
     var groups = [
-      ["Landing", ["trial_requests", "trial_installed"]],
+      // "Visitas" só vem quando a Cloudflare respondeu (152-3).
+      ["Landing", ("visits" in by ? ["visits"] : []).concat(["trial_requests", "trial_installed"])],
       ["No app", ["registrations", "verified", "paying"]],
     ];
-    var top = Math.max.apply(null, d.funnel.steps.map(function (s) { return s.count; }).concat([1]));
     var html = "";
     groups.forEach(function (g) {
+      // Escala por grupo: as visitas (centenas) não achatam as outras etapas.
+      var top = Math.max.apply(null, g[1].map(function (k) { return by[k] || 0; }).concat([1]));
       html += '<p class="ops-note" style="margin:6px 0 0">' + esc(g[0]) + "</p>";
       g[1].forEach(function (key, i) {
         var n = by[key] || 0, w = (n / top) * 100;
@@ -129,7 +137,8 @@
       });
     });
     $("funnel").innerHTML = html;
-    $("funnelNote").textContent = "cadastro → pagante: " + pct(by.paying || 0, by.registrations || 0);
+    $("funnelNote").textContent = ("visits" in by ? "visita → trial: " + pct(by.trial_requests || 0, by.visits) + " · " : "") +
+      "cadastro → pagante: " + pct(by.paying || 0, by.registrations || 0);
   }
 
   // ── Gráficos SVG ─────────────────────────────────────────────────────────
@@ -264,18 +273,61 @@
     });
   }
 
-  function hbars(items) {
+  function hbars(items, empty) {
     var top = Math.max.apply(null, items.map(function (i) { return i[1]; }).concat([1]));
-    if (!items.length) return '<p class="empty">Nenhuma assinatura ativa.</p>';
+    if (!items.length) return '<p class="empty">' + esc(empty || "Nenhuma assinatura ativa.") + "</p>";
     return '<div class="hbars">' + items.map(function (it) {
-      return '<div class="hbar"><span>' + esc(it[0]) + '</span><div class="track"><span style="width:' + ((it[1] / top) * 100).toFixed(1) +
+      return '<div class="hbar"><span class="k" title="' + esc(it[0]) + '">' + esc(it[0]) + '</span><div class="track"><span style="width:' + ((it[1] / top) * 100).toFixed(1) +
         '%"></span></div><span class="n">' + NF.format(it[1]) + "</span></div>";
     }).join("") + "</div>";
+  }
+
+  // ── Site (Cloudflare Web Analytics, 152-3) ───────────────────────────────
+  // Rótulos vêm da Cloudflare (caminho, host de origem): sempre via esc().
+  function webRows(rows, labelOf) {
+    return (rows || []).map(function (r) { return [labelOf(r.key), r.visits]; });
+  }
+  function country(code) {
+    try { return (REGION && /^[A-Z]{2}$/.test(code) && REGION.of(code)) || code || "Desconhecido"; } catch (e) { return code; }
+  }
+  function renderWeb(d) {
+    var w = d.web || { available: false, reason: "not_configured" };
+    $("webOn").hidden = !w.available;
+    $("webOff").hidden = !!w.available;
+    if (!w.available) {
+      $("webOff").innerHTML = '<h3 class="kicker" style="margin:0 0 6px">Visitas no site</h3><p class="ops-note">' +
+        (w.reason === "error"
+          ? "Cloudflare indisponível agora (" + esc(w.error || "erro") + "). O resto do painel não depende dela."
+          : "Web Analytics não configurado no relay: faltam os segredos CF_ANALYTICS_API_TOKEN e CF_ACCOUNT_ID.") +
+        "</p>";
+      return;
+    }
+    var series = [
+      { key: "visits", label: "Visitas", color: "--s1" },
+      { key: "pageviews", label: "Páginas vistas", color: "--s2" },
+    ];
+    legend($("webLegend"), series);
+    lineChart($("webDaily"), w.daily, function (r) { return fmtDay(r.day); }, series);
+    table($("webTable"), ["Dia", "Visitas", "Páginas vistas"], w.daily.slice().reverse().map(function (r) {
+      return [fmtDay(r.day), NF.format(r.visits), NF.format(r.pageviews)];
+    }));
+    $("webNote").textContent = NF.format(w.totals.pageviews) + " páginas vistas · aproximado" +
+      (w.clamped ? " · só os últimos " + w.days + " dias" : "");
+    $("webPages").innerHTML = hbars(webRows(w.pages, function (k) { return k || "/"; }), "Sem visitas no período.");
+    $("webRefs").innerHTML = hbars(webRows(w.referrers, function (k) { return k || "Direto / sem origem"; }), "Sem visitas no período.") +
+      (w.hosts && w.hosts.length > 1
+        ? '<p class="ops-note" style="margin:14px 0 6px">Por site</p>' + hbars(webRows(w.hosts, function (k) { return k || "—"; }))
+        : "");
+    $("webAudience").innerHTML =
+      '<p class="ops-note" style="margin:0 0 6px">Países</p>' + hbars(webRows(w.countries, country), "Sem visitas no período.") +
+      '<p class="ops-note" style="margin:14px 0 6px">Dispositivos</p>' +
+      hbars(webRows(w.devices, function (k) { return DEVICE[k] || k || "Desconhecido"; }), "Sem visitas no período.");
   }
 
   // ── Render ───────────────────────────────────────────────────────────────
   function render(d) {
     renderKpis(d);
+    renderWeb(d);
     renderFunnel(d);
 
     var dailySeries = [
