@@ -1,0 +1,211 @@
+<!doctype html>
+<!-- Local Vision — painel do operador (spec 152-2). Sem link público, fora do
+     sitemap e sem o beacon de analytics; os dados vêm do relay (/admin/stats)
+     com o token de operador, guardado só nesta aba. -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel do operador — Local Vision</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#08101d" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src https://szsdhiimvrjerkvtqwzw.supabase.co; form-action 'none'; object-src 'none'; base-uri 'self'" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png?v=20260927-lens" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css?v=20261111" />
+  <script src="assets/theme.js?v=20261027"></script>
+  <style>
+    /* Séries (dataviz): mesma ordem fixa nos dois temas, validadas contra a
+       superfície de cada um. O verde-água no claro fica < 3:1 → toda série
+       tem legenda e tabela. */
+    :root { --s1: #3987e5; --s2: #d95926; --s3: #199e70; --grid: rgba(167, 182, 201, .14); --crit: #ff6b6b; }
+    html[data-theme="light"] { --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --grid: rgba(13, 27, 46, .08); --crit: #c62828; }
+
+    .ops { padding-top: 28px; padding-bottom: 72px; }
+    .ops h1 { margin: 6px 0 4px; font-size: clamp(26px, 4vw, 34px); }
+    .ops h2 { font-size: 18px; margin: 0; }
+    .ops .sub { margin: 0; }
+    .ops-login { max-width: 440px; display: grid; gap: 14px; margin-top: 22px; }
+    .ops-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 18px 0 22px; }
+    .ops-bar .grow { flex: 1 1 200px; color: var(--text-secondary); font-size: 13px; }
+    .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--bg-surface); }
+    .seg button { border: 0; background: transparent; color: var(--text-secondary); font: inherit; font-size: 13px; font-weight: 600; padding: 8px 13px; cursor: pointer; min-height: 36px; }
+    .seg button + button { border-left: 1px solid var(--border); }
+    .seg button[aria-pressed="true"] { background: var(--accent-faint); color: var(--text-primary); }
+    .ops .btn-sm { padding: 8px 13px; font-size: 13px; min-height: 36px; cursor: pointer; font-family: inherit; }
+
+    .kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: 12px; }
+    .kpi { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 14px 16px; display: grid; gap: 4px; min-width: 0; }
+    .kpi .label { color: var(--text-secondary); font-size: 12.5px; font-weight: 600; }
+    .kpi .value { font-size: 26px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    .kpi .delta { font-size: 12.5px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+    .kpi .delta b { font-weight: 700; color: var(--text-primary); }
+
+    .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 16px; margin-top: 16px; }
+    .panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 16px 18px 14px; min-width: 0; }
+    .panel-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; margin-bottom: 10px; }
+    .panel-head p { margin: 0; color: var(--text-secondary); font-size: 13px; }
+    .ops .section-title { margin: 36px 0 2px; font-size: 20px; }
+    .ops-note { color: var(--text-secondary); font-size: 13px; margin: 8px 0 0; }
+
+    .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--text-secondary); margin: 0 0 6px; padding: 0; list-style: none; }
+    .legend li { display: inline-flex; align-items: center; gap: 6px; }
+    .legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+    .chart { position: relative; }
+    .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .chart text { fill: var(--text-secondary); font-size: 11px; font-family: var(--font-sans); }
+    .chart .gridline { stroke: var(--grid); stroke-width: 1; }
+    .chart .cross { stroke: var(--text-secondary); stroke-width: 1; stroke-dasharray: 3 3; opacity: .7; }
+    .tip { position: absolute; pointer-events: none; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 12.5px; color: var(--text-primary); box-shadow: 0 8px 24px rgba(0,0,0,.25); white-space: nowrap; z-index: 2; }
+    .tip .t { color: var(--text-secondary); font-size: 11.5px; margin-bottom: 4px; }
+    .tip .row { display: flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
+    .tip i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+
+    .funnel { display: grid; gap: 8px; }
+    .fstep { display: grid; grid-template-columns: minmax(110px, 34%) 1fr; gap: 10px; align-items: center; font-size: 13px; }
+    .fstep .name { color: var(--text-secondary); }
+    .fbar { position: relative; height: 26px; }
+    .fbar span { position: absolute; inset: 0 auto 0 0; background: var(--s1); border-radius: 0 4px 4px 0; min-width: 2px; }
+    .fbar b { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-weight: 700; font-variant-numeric: tabular-nums; color: var(--text-primary); white-space: nowrap; }
+    .fbar.inside b { color: #fff; }
+    .fconv { grid-column: 2; font-size: 12px; color: var(--text-secondary); margin-top: -4px; }
+
+    .hbars { display: grid; gap: 7px; }
+    .hbar { display: grid; grid-template-columns: minmax(80px, 30%) 1fr auto; gap: 10px; align-items: center; font-size: 13px; }
+    .hbar .track { height: 14px; position: relative; }
+    .hbar .track span { position: absolute; inset: 0 auto 0 0; background: var(--s1); border-radius: 0 4px 4px 0; min-width: 2px; }
+    .hbar .n { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+    .tbl-wrap { overflow-x: auto; }
+    table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+    .tbl th, .tbl td { text-align: right; padding: 7px 8px; border-bottom: 1px solid var(--border-subtle); white-space: nowrap; }
+    .tbl th:first-child, .tbl td:first-child { text-align: left; }
+    /* site.css destaca a 2ª coluna (tabela comparativa da landing): aqui não. */
+    html .ops .tbl th, html .ops .tbl td { background: transparent; border-left: 0; border-right: 0; }
+    html .ops .tbl th:nth-child(2) { color: var(--text-secondary); }
+    .tbl th { color: var(--text-secondary); font-weight: 600; font-size: 12px; }
+    .tbl td.l { text-align: left; }
+    details.tv { margin-top: 8px; font-size: 13px; }
+    details.tv summary { cursor: pointer; color: var(--text-secondary); }
+    .badge { display: inline-block; padding: 1px 7px; border-radius: 999px; font-size: 11.5px; font-weight: 600; border: 1px solid var(--border); color: var(--text-secondary); }
+    .badge.on { color: var(--text-primary); border-color: var(--ok); }
+    .empty { color: var(--text-secondary); font-size: 13px; padding: 18px 0; }
+    .ops-msg { color: var(--text-secondary); margin: 14px 0; }
+    .ops-msg.err { color: var(--crit); }
+    .soon { border-style: dashed; }
+    [hidden] { display: none !important; }
+    @media (max-width: 560px) {
+      .kpi .value { font-size: 22px; }
+      .fstep { grid-template-columns: 1fr; gap: 4px; }
+      .fconv { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="./" aria-label="Local Vision — página inicial">
+        <img class="brand-mark" src="assets/logo-owl-refined.png?v=20260927-lens" width="36" height="36" alt="" />
+        <span class="brand-text">Local Vision<small>Painel do operador</small></span>
+      </a>
+      <div class="top-actions legal-actions">
+        <button class="btn btn-ghost" type="button" id="logout" hidden>Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" class="wrap ops" data-relay="https://szsdhiimvrjerkvtqwzw.supabase.co/functions/v1/relay">
+    <p class="kicker">Operador</p>
+    <h1>Painel do negócio</h1>
+    <p class="sub">Funil, assinaturas e receita direto do relay. Só agregados; e-mails apenas em "Atividade recente".</p>
+
+    <section id="login" aria-labelledby="login-title">
+      <h2 id="login-title" class="kicker" style="margin-top:24px">Entrar</h2>
+      <form class="ops-login" id="tokenForm" novalidate>
+        <label class="field"><span>Token de operador (CLOUD_ADMIN_TOKEN)</span><input type="password" name="token" autocomplete="off" spellcheck="false" maxlength="256" required /></label>
+        <button class="btn btn-primary" type="submit">Abrir painel</button>
+      </form>
+      <p class="ops-msg" id="loginMsg" role="status"></p>
+    </section>
+
+    <section id="dash" hidden>
+      <div class="ops-bar">
+        <div class="seg" role="group" aria-label="Período">
+          <button type="button" data-days="7">7 dias</button>
+          <button type="button" data-days="30" aria-pressed="true">30 dias</button>
+          <button type="button" data-days="90">90 dias</button>
+          <button type="button" data-days="365">12 meses</button>
+        </div>
+        <span class="grow" id="updated" role="status"></span>
+        <button class="btn btn-ghost btn-sm" type="button" id="refresh">Atualizar</button>
+      </div>
+      <p class="ops-msg" id="dashMsg" role="status"></p>
+
+      <div class="kpis" id="kpis"></div>
+
+      <h2 class="section-title">Funil</h2>
+      <div class="grid2">
+        <div class="panel">
+          <div class="panel-head"><h3 class="kicker" style="margin:0">Conversão no período</h3><p id="funnelNote"></p></div>
+          <div class="funnel" id="funnel"></div>
+          <p class="ops-note">"Instalaram" = o e-mail do pedido de trial também se cadastrou no app. "Pagantes" conta contas (e-mail), não instalações.</p>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3 class="kicker" style="margin:0">Entradas por dia</h3></div>
+          <ul class="legend" id="dailyLegend"></ul>
+          <div class="chart" id="daily"></div>
+          <details class="tv"><summary>Ver tabela</summary><div class="tbl-wrap" id="dailyTable"></div></details>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="panel">
+          <div class="panel-head"><h3 class="kicker" style="margin:0">Coortes semanais de cadastro</h3><p>últimas 12 semanas</p></div>
+          <div class="tbl-wrap" id="cohorts"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3 class="kicker" style="margin:0">Por perfil</h3><p>desde o início</p></div>
+          <div class="tbl-wrap" id="profiles"></div>
+        </div>
+      </div>
+
+      <h2 class="section-title">Assinaturas e receita</h2>
+      <div class="grid2">
+        <div class="panel">
+          <div class="panel-head"><h3 class="kicker" style="margin:0">Novas × canceladas por semana</h3></div>
+          <ul class="legend" id="weeklyLegend"></ul>
+          <div class="chart" id="weekly"></div>
+          <details class="tv"><summary>Ver tabela</summary><div class="tbl-wrap" id="weeklyTable"></div></details>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3 class="kicker" style="margin:0">Assinaturas ativas</h3></div>
+          <div id="mix"></div>
+          <p class="ops-note" id="mrrNote"></p>
+        </div>
+      </div>
+
+      <h2 class="section-title">Em breve</h2>
+      <div class="grid2">
+        <div class="panel soon"><h3 class="kicker" style="margin:0 0 6px">Visitas no site</h3><p class="ops-note">Cloudflare Web Analytics no painel — iteração 152-3.</p></div>
+        <div class="panel soon"><h3 class="kicker" style="margin:0 0 6px">Uso do produto</h3><p class="ops-note">Instalações ativas, versões e funções usadas (telemetria opcional) — iteração 152-4.</p></div>
+      </div>
+
+      <h2 class="section-title">Atividade recente</h2>
+      <div class="panel" style="margin-top:12px">
+        <div class="panel-head">
+          <p>Inclui e-mails. Só carrega quando você pedir.</p>
+          <button class="btn btn-ghost btn-sm" type="button" id="loadRecent">Carregar</button>
+        </div>
+        <div id="recent"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/painel.js?v=20261112"></script>
+</body>
+</html>
